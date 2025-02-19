@@ -1,0 +1,1 @@
+# openfoodfacts-spring-boot-starter
