@@ -1,5 +1,6 @@
-package com.alpermulayim.openfoodfacts_spring_boot_starter.dtos;
+package com.alpermulayim.openfoodfacts_spring_boot_starter.responses;
 
+import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record OpenFoodFactsResponse(

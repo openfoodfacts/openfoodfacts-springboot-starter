@@ -1,19 +1,19 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter;
 
-import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.OpenFoodFactsResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.Product;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service("OpenFoodFactsWebClient")
@@ -59,6 +59,15 @@ public class OpenFoodFactsWebClient {
                 .uri(uriUtils.productsUri(request.productCode(),request.productFields()))
                 .retrieve()
                 .body(OpenFoodFactsResponse.class);
+    }
+
+    //TODO: response will be PAGE
+    public OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) throws InvocationTargetException, IllegalAccessException {
+
+       return restClient.get()
+                .uri(uriUtils.searchUri(request))
+                .retrieve()
+                .body(OpenFoodFactsPageResponse.class);
     }
 
 }

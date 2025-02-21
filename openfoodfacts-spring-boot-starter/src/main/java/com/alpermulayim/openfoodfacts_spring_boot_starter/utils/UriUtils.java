@@ -2,9 +2,13 @@ package com.alpermulayim.openfoodfacts_spring_boot_starter.utils;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchField;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.RecordComponent;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,6 +17,7 @@ import java.util.stream.Collectors;
 public class UriUtils {
 
     private final String productsPath = "/api/v2/product/";
+    private final String searchPath = "/api/v2/search";
 
     private String getProductPath(String productCode){
         return productsPath + productCode + ".json";
@@ -52,6 +57,22 @@ public class UriUtils {
         return UriComponentsBuilder.fromPath(path)
                 .build()
                 .toUriString();
+    }
+
+    public String searchUri(ProductSearchRequest searchRequest) throws InvocationTargetException, IllegalAccessException {
+
+        List<RecordComponent> components = List.of(searchRequest.getClass().getRecordComponents());
+        UriComponentsBuilder uriBuilder =  UriComponentsBuilder.fromPath(searchPath);
+
+        for(RecordComponent component : components){
+            Object value = component.getAccessor().invoke(searchRequest);
+            ProductSearchField field = ProductSearchField.fromFieldName(component.getName());
+            if(value != null){
+                uriBuilder.queryParam(field.get(),value);
+            }
+        }
+
+        return uriBuilder.build().toUriString();
     }
 
 }
