@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Service
+@Service("OpenFoodFactsWebClient")
 public class OpenFoodFactsWebClient {
     private RestClient restClient;
     private UriUtils uriUtils;

@@ -1,6 +1,7 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter.testdata;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +9,15 @@ import java.util.List;
 public class TestData {
 
     public static final  String sampleProductCode = "5449000000996";
-    public static List<ProductField> sampleFields = new ArrayList<>();
+    public static final String emptyProductCode = "";
+    public static final ProductRequest nullProductRequest = null;
 
-    private void initSampleFields() {
+    public static String sampleProductCode(){
+        return sampleProductCode;
+    }
+
+    public static List<ProductField> sampleFields(){
+        List<ProductField> sampleFields = new ArrayList<>();
         sampleFields.add(ProductField.PRODUCT_NAME);
         sampleFields.add(ProductField.CODE);
         sampleFields.add(ProductField.NUTRISCORE_SCORE);
@@ -19,13 +26,18 @@ public class TestData {
         sampleFields.add(ProductField.NUTRITION_GRADES);
         sampleFields.add(ProductField.BRANDS);
         sampleFields.add(ProductField.INGREDIENTS_TEXT);
-    }
-
-    public static String sampleProductCode(){
-        return sampleProductCode;
-    }
-
-    public static List<ProductField> sampleFields(){
         return sampleFields;
+    }
+
+    public static ProductRequest emptyProductRequest(){
+        return new ProductRequest("",null);
+    }
+
+    public static ProductRequest productRequestProductCodeNull(){
+        return new ProductRequest(null,sampleFields());
+    }
+
+    public static ProductRequest productRequestFieldsNull(){
+        return new ProductRequest(sampleProductCode(),null);
     }
 }

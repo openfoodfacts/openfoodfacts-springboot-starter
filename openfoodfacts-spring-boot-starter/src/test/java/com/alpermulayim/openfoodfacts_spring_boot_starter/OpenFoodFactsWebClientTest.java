@@ -23,7 +23,6 @@ public class OpenFoodFactsWebClientTest {
                     UriUtils.class
             ));
 
-
     @BeforeEach
     public void init(){
         contextRunner.run((context)->{
@@ -32,7 +31,39 @@ public class OpenFoodFactsWebClientTest {
     }
 
     @Test
-    public void whenWebCleintCalledWithNullProductCodeThrowsException(){
+    public void whenWebClientCreatedBeanNameOpenFoodFactsWebClient(){
+        contextRunner.run((context)->{
+            assertTrue(context.containsBean("OpenFoodFactsWebClient"));
+        });
+    }
+
+    @Test
+    public void whenWebClientCalledWithNullProductCodeThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(null,TestData.sampleFields()));
+    }
+
+    @Test
+    public void whenWebClientCalledWithEmptyProductCodeThrowsException(){
+        assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.emptyProductCode,TestData.sampleFields()));
+    }
+
+    @Test
+    public void whenWebClientCalledWithEmptyProductRequestThrowsException(){
+        assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.emptyProductRequest()));
+    }
+
+    @Test
+    public void whenWebClientCalledWithNullProductRequestThrowsException(){
+        assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.nullProductRequest));
+    }
+
+    @Test
+    public void whenWebClientCalledWithProductRequestWithNullProductThrowsException(){
+        assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.productRequestProductCodeNull()));
+    }
+
+    @Test
+    public void whenWebClientCalledWithProductRequestWithNullFieldsThrowsException(){
+        assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.productRequestFieldsNull()));
     }
 }
