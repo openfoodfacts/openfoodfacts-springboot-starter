@@ -1,11 +1,12 @@
 package com.alpermulayim.openfoodfacts_starter_demo;
 
-import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.OpenFoodFactsResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.InvocationTargetException;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -21,5 +22,10 @@ public class DemoOpenFoodFactsController {
     @GetMapping("/{code}")
     OpenFoodFactsResponse getProduct(@PathVariable String code){
         return service.request(code);
+    }
+
+    @GetMapping("/search")
+    OpenFoodFactsPageResponse getProduct(@RequestBody ProductSearchRequest request) throws InvocationTargetException, IllegalAccessException {
+        return service.search(request);
     }
 }

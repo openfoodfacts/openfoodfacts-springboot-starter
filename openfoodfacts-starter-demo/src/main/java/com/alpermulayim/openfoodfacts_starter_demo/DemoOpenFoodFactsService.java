@@ -1,11 +1,14 @@
 package com.alpermulayim.openfoodfacts_starter_demo;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.OpenFoodFactsWebClient;
-import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.OpenFoodFactsResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,5 +33,10 @@ public class DemoOpenFoodFactsService {
 
     public OpenFoodFactsResponse request(String productCode){
         return webClient.getProduct(productCode);
+    }
+
+    public OpenFoodFactsPageResponse search(ProductSearchRequest request)
+            throws InvocationTargetException, IllegalAccessException {
+        return webClient.searchProduct(request);
     }
 }
