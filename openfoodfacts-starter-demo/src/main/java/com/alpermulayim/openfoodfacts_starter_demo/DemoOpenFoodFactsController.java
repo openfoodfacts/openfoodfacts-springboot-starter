@@ -3,6 +3,7 @@ package com.alpermulayim.openfoodfacts_starter_demo;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.OpenFoodFactsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,5 +16,10 @@ public class DemoOpenFoodFactsController {
     @GetMapping
     OpenFoodFactsResponse getProduct(){
         return service.request();
+    }
+
+    @GetMapping("/{code}")
+    OpenFoodFactsResponse getProduct(@PathVariable String code){
+        return service.request(code);
     }
 }
