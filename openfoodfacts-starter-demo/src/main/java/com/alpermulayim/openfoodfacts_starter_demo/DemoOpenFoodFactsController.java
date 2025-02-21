@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
+/**
+ * @author Alper Mulayim  https://github.com/AlperMulayim
+ */
 
 @RestController
 @RequestMapping("api/v1/products")

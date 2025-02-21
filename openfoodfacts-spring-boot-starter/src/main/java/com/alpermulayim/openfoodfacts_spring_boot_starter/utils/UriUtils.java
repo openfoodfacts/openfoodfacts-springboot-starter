@@ -10,8 +10,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.RecordComponent;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+
+/**
+ * @author Alper Mulayim  https://github.com/AlperMulayim
+ */
 
 @Component("OpenFoodFactsUrlUtils")
 public class UriUtils {
@@ -23,8 +26,6 @@ public class UriUtils {
         return productsPath + productCode + ".json";
     }
 
-    //TODO : /api/v2/product/5449000000996.json?fields=product_name,nutriscore_grade,nutriscore_score,nutriscore_version,ingredients_text,quantity
-    //TODO: create url for product
     public String productsUri(String productCode, List<ProductField> fields) throws OpenFoodFactsException{
 
         String path = getProductPath(productCode);
@@ -59,8 +60,11 @@ public class UriUtils {
                 .toUriString();
     }
 
-    public String searchUri(ProductSearchRequest searchRequest) throws InvocationTargetException, IllegalAccessException {
+    public String searchUri(ProductSearchRequest searchRequest) throws InvocationTargetException, IllegalAccessException , OpenFoodFactsException{
 
+        if(searchRequest == null){
+            throw new OpenFoodFactsException("Search Request could not be null");
+        }
         List<RecordComponent> components = List.of(searchRequest.getClass().getRecordComponents());
         UriComponentsBuilder uriBuilder =  UriComponentsBuilder.fromPath(searchPath);
 

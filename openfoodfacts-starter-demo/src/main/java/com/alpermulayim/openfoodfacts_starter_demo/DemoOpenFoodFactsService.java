@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * @author Alper Mulayim  https://github.com/AlperMulayim
+ */
 
 @Service
 public class DemoOpenFoodFactsService {

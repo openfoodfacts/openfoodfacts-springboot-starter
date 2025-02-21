@@ -14,7 +14,9 @@ import org.springframework.web.client.RestClient;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
+/**
+ * @author Alper Mulayim  https://github.com/AlperMulayim
+ */
 
 @Service("OpenFoodFactsWebClient")
 public class OpenFoodFactsWebClient {
@@ -61,9 +63,11 @@ public class OpenFoodFactsWebClient {
                 .body(OpenFoodFactsResponse.class);
     }
 
-    //TODO: response will be PAGE
-    public OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) throws InvocationTargetException, IllegalAccessException {
+    public OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) throws InvocationTargetException, IllegalAccessException ,OpenFoodFactsException{
 
+        if(request == null){
+            throw new OpenFoodFactsException("ProductSearchRequest could not be null");
+        }
        return restClient.get()
                 .uri(uriUtils.searchUri(request))
                 .retrieve()

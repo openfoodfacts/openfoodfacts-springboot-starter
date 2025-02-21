@@ -66,4 +66,8 @@ public class OpenFoodFactsWebClientTest {
     public void whenWebClientCalledWithProductRequestWithNullFieldsThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.productRequestFieldsNull()));
     }
+    @Test
+    public void whenWebClientCalledWithSearchRequestWithNullFieldsThrowsException(){
+        assertThrows(OpenFoodFactsException.class,()-> webClient.searchProduct(null));
+    }
 }
