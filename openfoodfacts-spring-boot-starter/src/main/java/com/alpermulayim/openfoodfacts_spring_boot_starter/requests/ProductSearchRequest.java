@@ -1,5 +1,8 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter.requests;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public record ProductSearchRequest(
         String additivesTags,
         String allergensTags,
@@ -66,6 +69,14 @@ public record ProductSearchRequest(
         public Builder sortBy(String sortBy) { this.sortBy = sortBy; return this; }
         public Builder page(Integer page) { this.page = page; return this; }
         public Builder pageSize(Integer pageSize) { this.pageSize = pageSize; return this; }
+
+        public Builder fields(List<ProductField> fields) {
+            String fieldString =  fields.stream()
+                               .map(field->field.get())
+                    .collect(Collectors.joining(","));
+            this.fields = fieldString;
+            return this;
+        }
 
         public ProductSearchRequest build() {
             return new ProductSearchRequest(
