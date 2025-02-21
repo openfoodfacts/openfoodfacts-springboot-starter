@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.AutoConfiguration.imports=com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientConfiguration

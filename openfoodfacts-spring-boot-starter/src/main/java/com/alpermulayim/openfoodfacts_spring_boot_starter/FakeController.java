@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/product")
 public class FakeController {
     @Autowired
-    private ApiService service;
+    private OpenFoodFactsWebClient service;
 
     @GetMapping
     OpenFoodFactsResponse getProduct(){

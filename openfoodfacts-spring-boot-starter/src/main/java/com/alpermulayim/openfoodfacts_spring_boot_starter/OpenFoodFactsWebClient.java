@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Component
-public class ApiService {
+@Service
+public class OpenFoodFactsWebClient {
     private RestClient restClient;
     private UriUtils uriUtils;
 
     @Autowired
-    public ApiService(UriUtils uriUtils) {
-        this.uriUtils = uriUtils;
+    public OpenFoodFactsWebClient() {
+        this.uriUtils = new UriUtils();
         restClient = RestClient.create("https://world.openfoodfacts.org");
     }
 
