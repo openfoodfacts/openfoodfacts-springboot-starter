@@ -4,6 +4,7 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.OpenFoodFactsResp
 import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.Product;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,6 +43,20 @@ public class OpenFoodFactsWebClient {
     public OpenFoodFactsResponse getProduct(String productCode){
         return restClient.get()
                 .uri(uriUtils.productsUri(productCode))
+                .retrieve()
+                .body(OpenFoodFactsResponse.class);
+    }
+
+    public OpenFoodFactsResponse getProduct(ProductRequest request){
+        if(request == null){
+            throw new OpenFoodFactsException(" ProductRequest could not be null");
+        }
+        if(request.productFields() == null || request.productCode() == null || request.productCode().isEmpty()){
+            throw new OpenFoodFactsException("ProductRequest fields or productCode could not be null ");
+        }
+
+        return restClient.get()
+                .uri(uriUtils.productsUri(request.productCode(),request.productFields()))
                 .retrieve()
                 .body(OpenFoodFactsResponse.class);
     }
