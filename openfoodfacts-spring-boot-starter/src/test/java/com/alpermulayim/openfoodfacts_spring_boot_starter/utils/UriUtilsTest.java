@@ -24,30 +24,30 @@ public class UriUtilsTest {
 
 
     @BeforeEach
-    public void initUriUtils(){
+    void initUriUtils(){
          contextRunner.run((context -> {
             uriUtils = context.getBean(UriUtils.class);
         }));
     }
 
     @Test
-    public void whenProductsUriNullProductCodeWillThrowsException(){
+    void whenProductsUriNullProductCodeWillThrowsException(){
         assertThrows(OpenFoodFactsException.class,()->uriUtils.productsUri(null));
     }
 
     @Test
-    public void whenProductsUriCalledWithEmptyProductCodeWillThrowException(){
+    void whenProductsUriCalledWithEmptyProductCodeWillThrowException(){
         assertThrows(OpenFoodFactsException.class,()->uriUtils.productsUri(""));
     }
 
     @Test
-    public void whenProductsUriCalledWithProductCodeAndNullFieldsDoesNotContainFields(){
+    void whenProductsUriCalledWithProductCodeAndNullFieldsDoesNotContainFields(){
         String uri = uriUtils.productsUri(TestData.sampleProductCode(),null);
         assertFalse(uri.contains("fields"));
     }
 
     @Test
-    public void whenProductSearchRequestBuildingWithBrandTagsPageAndPageSizeUrlStringWillHaveBuildedData() throws InvocationTargetException, IllegalAccessException {
+    void whenProductSearchRequestBuildingWithBrandTagsPageAndPageSizeUrlStringWillHaveBuildedData() throws InvocationTargetException, IllegalAccessException {
         ProductSearchRequest request = ProductSearchRequest.builder()
                 .brandsTags("nestle")
                 .page(1)
@@ -61,7 +61,7 @@ public class UriUtilsTest {
     }
 
     @Test
-    public void whenProductSearchRequestBuildedWithFieldsListEnumURLContainsEnumsData() throws InvocationTargetException, IllegalAccessException {
+    void whenProductSearchRequestBuildedWithFieldsListEnumURLContainsEnumsData() throws InvocationTargetException, IllegalAccessException {
         ProductSearchRequest request = ProductSearchRequest.builder()
                 .brandsTags("nestle")
                 .fields(TestData.sampleFields())
@@ -75,7 +75,7 @@ public class UriUtilsTest {
     }
 
     @Test
-    public void whenProductSearchRequestBuildedFieldsNullNotIncludedToUrl() throws InvocationTargetException, IllegalAccessException {
+    void whenProductSearchRequestBuildedFieldsNullNotIncludedToUrl() throws InvocationTargetException, IllegalAccessException {
         ProductSearchRequest request = ProductSearchRequest.builder()
                 .brandsTags("nestle")
                 .build();
@@ -87,7 +87,7 @@ public class UriUtilsTest {
     }
 
     @Test
-    public void whenUrlCreatedForSearchShouldIncludeSearchPath() throws InvocationTargetException, IllegalAccessException {
+    void whenUrlCreatedForSearchShouldIncludeSearchPath() throws InvocationTargetException, IllegalAccessException {
         ProductSearchRequest request = ProductSearchRequest.builder()
                 .brandsTags("nestle")
                 .build();
@@ -97,17 +97,13 @@ public class UriUtilsTest {
     }
 
     @Test
-    public void whenUrlCreatedForProductShouldIncludeSearchPath() throws InvocationTargetException, IllegalAccessException {
-        ProductSearchRequest request = ProductSearchRequest.builder()
-                .brandsTags("nestle")
-                .build();
-
+    void whenUrlCreatedForProductShouldIncludeSearchPath(){
         String url = uriUtils.productsUri(TestData.sampleProductCode);
         assertTrue(url.contains("product"));
     }
 
     @Test
-    public void whenUrlCreatedWithNullSearchRequestWillThrowException() throws InvocationTargetException, IllegalAccessException {
+    void whenUrlCreatedWithNullSearchRequestWillThrowException(){
         assertThrows(OpenFoodFactsException.class,()->uriUtils.searchUri(null));
     }
 }

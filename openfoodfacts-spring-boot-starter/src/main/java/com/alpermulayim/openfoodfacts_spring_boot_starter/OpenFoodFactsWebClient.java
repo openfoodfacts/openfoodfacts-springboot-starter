@@ -2,7 +2,6 @@ package com.alpermulayim.openfoodfacts_spring_boot_starter;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
-import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.Product;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
@@ -18,7 +17,7 @@ import java.util.List;
  * @author Alper Mulayim  https://github.com/AlperMulayim
  */
 
-@Service("OpenFoodFactsWebClient")
+@Service("openFoodFactsWebClient")
 public class OpenFoodFactsWebClient {
     private RestClient restClient;
     private UriUtils uriUtils;
@@ -34,12 +33,10 @@ public class OpenFoodFactsWebClient {
             throw new OpenFoodFactsException("Product  Number cannot be null for product request");
         }
 
-       OpenFoodFactsResponse product = restClient.get()
+      return restClient.get()
                 .uri(uriUtils.productsUri(productCode, fields))
                 .retrieve()
                 .body(OpenFoodFactsResponse.class);
-
-        return product;
     }
 
     public OpenFoodFactsResponse getProduct(String productCode){

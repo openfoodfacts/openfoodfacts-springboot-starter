@@ -72,7 +72,7 @@ public record ProductSearchRequest(
 
         public Builder fields(List<ProductField> fields) {
             String fieldString =  fields.stream()
-                               .map(field->field.get())
+                               .map(ProductField::get)
                     .collect(Collectors.joining(","));
             this.fields = fieldString;
             return this;

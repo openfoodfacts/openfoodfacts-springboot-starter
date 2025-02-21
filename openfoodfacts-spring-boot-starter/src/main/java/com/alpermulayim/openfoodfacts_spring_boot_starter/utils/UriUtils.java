@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author Alper Mulayim  https://github.com/AlperMulayim
  */
 
-@Component("OpenFoodFactsUrlUtils")
+@Component("openFoodFactsUrlUtils")
 public class UriUtils {
 
     private final String productsPath = "/api/v2/product/";
@@ -41,7 +41,7 @@ public class UriUtils {
         }
 
         String fieldsStr = fields.stream()
-                .map(field->field.get())
+                .map(ProductField::get)
                 .collect(Collectors.joining(","));
 
         return UriComponentsBuilder.fromPath(path)

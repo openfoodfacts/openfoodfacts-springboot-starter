@@ -24,50 +24,50 @@ public class OpenFoodFactsWebClientTest {
             ));
 
     @BeforeEach
-    public void init(){
-        contextRunner.run((context)->{
+    void init(){
+        contextRunner.run(context->{
             webClient = context.getBean(OpenFoodFactsWebClient.class);
         });
     }
 
     @Test
-    public void whenWebClientCreatedBeanNameOpenFoodFactsWebClient(){
-        contextRunner.run((context)->{
+    void whenWebClientCreatedBeanNameOpenFoodFactsWebClient(){
+        contextRunner.run(context->{
             assertTrue(context.containsBean("OpenFoodFactsWebClient"));
         });
     }
 
     @Test
-    public void whenWebClientCalledWithNullProductCodeThrowsException(){
+    void whenWebClientCalledWithNullProductCodeThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(null,TestData.sampleFields()));
     }
 
     @Test
-    public void whenWebClientCalledWithEmptyProductCodeThrowsException(){
+    void whenWebClientCalledWithEmptyProductCodeThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.emptyProductCode,TestData.sampleFields()));
     }
 
     @Test
-    public void whenWebClientCalledWithEmptyProductRequestThrowsException(){
+    void whenWebClientCalledWithEmptyProductRequestThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.emptyProductRequest()));
     }
 
     @Test
-    public void whenWebClientCalledWithNullProductRequestThrowsException(){
+    void whenWebClientCalledWithNullProductRequestThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.nullProductRequest));
     }
 
     @Test
-    public void whenWebClientCalledWithProductRequestWithNullProductThrowsException(){
+    void whenWebClientCalledWithProductRequestWithNullProductThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.productRequestProductCodeNull()));
     }
 
     @Test
-    public void whenWebClientCalledWithProductRequestWithNullFieldsThrowsException(){
+    void whenWebClientCalledWithProductRequestWithNullFieldsThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.getProduct(TestData.productRequestFieldsNull()));
     }
     @Test
-    public void whenWebClientCalledWithSearchRequestWithNullFieldsThrowsException(){
+    void whenWebClientCalledWithSearchRequestWithNullFieldsThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.searchProduct(null));
     }
 }
