@@ -40,6 +40,7 @@ public class UriUtils {
 
         if(fields == null){
             return UriComponentsBuilder.fromPath(productsPath)
+                    .pathSegment(productCode)
                     .build()
                     .toUriString();
         }
@@ -49,6 +50,7 @@ public class UriUtils {
                 .collect(Collectors.joining(","));
 
         return UriComponentsBuilder.fromPath(productsPath)
+                .pathSegment(productCode)
                 .queryParam("fields",fieldsStr)
                 .build()
                 .toUriString();
@@ -60,6 +62,7 @@ public class UriUtils {
             throw new OpenFoodFactsException("Product Code could not be null");
         }
         return UriComponentsBuilder.fromPath(productsPath)
+                .pathSegment(productCode)
                 .build()
                 .toUriString();
     }

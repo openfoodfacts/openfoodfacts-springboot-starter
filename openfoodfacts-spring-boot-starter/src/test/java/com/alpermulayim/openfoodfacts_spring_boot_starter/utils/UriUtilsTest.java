@@ -116,4 +116,15 @@ public class UriUtilsTest {
     void whenUrlCreatedWithNullSearchRequestWillThrowException(){
         assertThrows(OpenFoodFactsException.class,()->uriUtils.searchUri(null));
     }
+
+    @Test
+    void whenProductUrlCreatedShouldIncludeProductCode(){
+       assertTrue(uriUtils.productsUri(TestData.sampleProductCode()).contains(TestData.sampleProductCode()));
+    }
+
+    @Test
+    void whenProductUrlCreatedShouldIncludeProductCodeAndFields(){
+        assertTrue(uriUtils.productsUri(TestData.sampleProductCode(),TestData.sampleFields()).contains(TestData.sampleProductCode()));
+        assertTrue(uriUtils.productsUri(TestData.sampleProductCode(),TestData.sampleFields()).contains("fields"));
+    }
 }
