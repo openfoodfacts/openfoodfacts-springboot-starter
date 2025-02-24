@@ -101,12 +101,4 @@ public class OpenFoodFactsWebClientTest {
             assertEquals(TestData.defaultWebClientProperties().productPath(),productPath);
         });
     }
-
-    @Test
-    void whenWebClientPropertiesProductPathJsonDelimeterShouldSameOnProperties(){
-        contextRunner.run(context -> {
-            String delim = context.getEnvironment().getProperty("openfoodfacts.productsPathJsonDelimeter");
-            assertEquals(TestData.defaultWebClientProperties().productsPathJsonDelimeter(),delim);
-        });
-    }
 }

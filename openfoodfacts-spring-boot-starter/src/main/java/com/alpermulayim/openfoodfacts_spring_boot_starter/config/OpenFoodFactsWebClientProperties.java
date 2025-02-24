@@ -5,7 +5,6 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 
 /**
  * @author Alper Mulayim  <a href="https://github.com/AlperMulayim">...</a>
- * "https://world.openfoodfacts.org/api/v2/product/5449000000996.json TODO: is not good for REST standards find out correct endpoint.
  */
 @ConfigurationProperties(prefix = "openfoodfacts")
 public record OpenFoodFactsWebClientProperties (
@@ -14,10 +13,6 @@ public record OpenFoodFactsWebClientProperties (
         @DefaultValue("/api/v2/search")
         String searchPath,
         @DefaultValue("/api/v2/product")
-        String productPath,
-        @DefaultValue("/")   // TODO: /api/v2/product/5449000000996.json  is not good for REST standards find out correct endpoint.
-        String productsPathJsonDelimeter, // OpenFoodFacts API request build < /api/v2/product/5449000000996.json > I think need to updated.
-        @DefaultValue(".json")
-        String productsPathJsonPrefix // OpenFoodFacts API request < /api/v2/product/5449000000996.json > I think need to updated.
+        String productPath
 ){}
 

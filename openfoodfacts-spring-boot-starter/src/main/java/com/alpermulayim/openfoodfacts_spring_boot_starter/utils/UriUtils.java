@@ -23,33 +23,23 @@ public class UriUtils {
 
     private String productsPath;
     private String searchPath;
-    private String productsPathJsonPrefix;
-    private String productDelimeter;
+
 
     @Autowired
     public UriUtils(OpenFoodFactsWebClientProperties properties) {
         productsPath = properties.productPath();
         searchPath = properties.searchPath();
-        productsPathJsonPrefix = properties.productsPathJsonPrefix();
-        productDelimeter = properties.productsPathJsonDelimeter();
-
     }
 
-    private String getProductPath(String productCode){
-        return productsPath + productDelimeter + productCode + productsPathJsonPrefix ;
-    }
 
     public String productsUri(String productCode, List<ProductField> fields) throws OpenFoodFactsException{
-
-        String path = getProductPath(productCode);
-        System.out.println(path);
 
         if(productCode == null ||productCode.isEmpty()) {
             throw new OpenFoodFactsException("ProductCode could not be null");
         }
 
         if(fields == null){
-            return UriComponentsBuilder.fromPath(path)
+            return UriComponentsBuilder.fromPath(productsPath)
                     .build()
                     .toUriString();
         }
@@ -58,19 +48,18 @@ public class UriUtils {
                 .map(ProductField::get)
                 .collect(Collectors.joining(","));
 
-        return UriComponentsBuilder.fromPath(path)
+        return UriComponentsBuilder.fromPath(productsPath)
                 .queryParam("fields",fieldsStr)
                 .build()
                 .toUriString();
     }
 
     public String productsUri(String productCode) throws OpenFoodFactsException {
-        String path = getProductPath(productCode);
-        System.out.println(path);
+
         if(productCode == null || productCode.isEmpty()){
             throw new OpenFoodFactsException("Product Code could not be null");
         }
-        return UriComponentsBuilder.fromPath(path)
+        return UriComponentsBuilder.fromPath(productsPath)
                 .build()
                 .toUriString();
     }

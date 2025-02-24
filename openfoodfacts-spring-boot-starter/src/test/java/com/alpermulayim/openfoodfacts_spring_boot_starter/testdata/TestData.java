@@ -42,9 +42,9 @@ public class TestData {
         return new ProductRequest(sampleProductCode(),null);
     }
     public static OpenFoodFactsWebClientProperties defaultWebClientProperties(){
-        return new OpenFoodFactsWebClientProperties("https://world.openfoodfacts.org","/api/v2/search","/api/v2/product","/","/.json");
+        return new OpenFoodFactsWebClientProperties("https://world.openfoodfacts.org","/api/v2/search","/api/v2/product");
     }
     public static OpenFoodFactsWebClientProperties nullWebClientProperties(){
-        return new OpenFoodFactsWebClientProperties(null,null,null,null,null);
+        return new OpenFoodFactsWebClientProperties(null,null,null);
     }
 }
