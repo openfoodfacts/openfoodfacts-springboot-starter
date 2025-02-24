@@ -1,6 +1,7 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientConfiguration;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.testdata.TestData;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
@@ -21,7 +22,13 @@ public class OpenFoodFactsWebClientTest {
                     OpenFoodFactsWebClientConfiguration.class,
                     RestClientAutoConfiguration.class,
                     UriUtils.class
-            ));
+            ))
+            .withPropertyValues(
+                    "openfoodfacts.base-url=https://world.openfoodfacts.org",
+                    "openfoodfacts.search-path=/api/v2/search",
+                    "openfoodfacts.product-path=/api/v2/product",
+                    "openfoodfacts.productsPathJsonDelimeter=/"
+            );
 
     @BeforeEach
     void init(){
@@ -33,7 +40,7 @@ public class OpenFoodFactsWebClientTest {
     @Test
     void whenWebClientCreatedBeanNameOpenFoodFactsWebClient(){
         contextRunner.run(context->{
-            assertTrue(context.containsBean("OpenFoodFactsWebClient"));
+            assertTrue(context.containsBean("openFoodFactsWebClient"));
         });
     }
 
@@ -69,5 +76,37 @@ public class OpenFoodFactsWebClientTest {
     @Test
     void whenWebClientCalledWithSearchRequestWithNullFieldsThrowsException(){
         assertThrows(OpenFoodFactsException.class,()-> webClient.searchProduct(null));
+    }
+
+    @Test
+    void whenWebClientPropertiesBaseUrlShouldSameOnProperties(){
+        contextRunner.run(context -> {
+            String baseUrl = context.getEnvironment().getProperty("openfoodfacts.base-url");
+            assertEquals(TestData.defaultWebClientProperties().baseUrl(),baseUrl);
+        });
+    }
+
+    @Test
+    void whenWebClientPropertiesSearchPathShouldSameOnProperties(){
+        contextRunner.run(context -> {
+            String searchPath = context.getEnvironment().getProperty("openfoodfacts.search-path");
+            assertEquals(TestData.defaultWebClientProperties().searchPath(),searchPath);
+        });
+    }
+
+    @Test
+    void whenWebClientPropertiesProductPathShouldSameOnProperties(){
+        contextRunner.run(context -> {
+            String productPath = context.getEnvironment().getProperty("openfoodfacts.product-path");
+            assertEquals(TestData.defaultWebClientProperties().productPath(),productPath);
+        });
+    }
+
+    @Test
+    void whenWebClientPropertiesProductPathJsonDelimeterShouldSameOnProperties(){
+        contextRunner.run(context -> {
+            String delim = context.getEnvironment().getProperty("openfoodfacts.productsPathJsonDelimeter");
+            assertEquals(TestData.defaultWebClientProperties().productsPathJsonDelimeter(),delim);
+        });
     }
 }

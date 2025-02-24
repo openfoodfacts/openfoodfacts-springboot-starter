@@ -1,5 +1,6 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter.testdata;
 
+import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
 
@@ -39,5 +40,11 @@ public class TestData {
 
     public static ProductRequest productRequestFieldsNull(){
         return new ProductRequest(sampleProductCode(),null);
+    }
+    public static OpenFoodFactsWebClientProperties defaultWebClientProperties(){
+        return new OpenFoodFactsWebClientProperties("https://world.openfoodfacts.org","/api/v2/search","/api/v2/product","/","/.json");
+    }
+    public static OpenFoodFactsWebClientProperties nullWebClientProperties(){
+        return new OpenFoodFactsWebClientProperties(null,null,null,null,null);
     }
 }

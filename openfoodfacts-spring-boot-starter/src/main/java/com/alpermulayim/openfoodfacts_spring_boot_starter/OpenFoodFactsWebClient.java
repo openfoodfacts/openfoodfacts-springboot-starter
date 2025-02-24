@@ -1,5 +1,6 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter;
 
+import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
@@ -21,11 +22,15 @@ import java.util.List;
 public class OpenFoodFactsWebClient {
     private RestClient restClient;
     private UriUtils uriUtils;
+    private OpenFoodFactsWebClientProperties clientProperties;
 
     @Autowired
-    public OpenFoodFactsWebClient() {
-        this.uriUtils = new UriUtils();
-        restClient = RestClient.create("https://world.openfoodfacts.org");
+    public OpenFoodFactsWebClient(OpenFoodFactsWebClientProperties clientProperties) {
+        this.clientProperties = clientProperties;
+        this.uriUtils = new UriUtils(clientProperties);
+        restClient = RestClient.create(clientProperties.baseUrl());
+
+        //TODO: add init properties print for caller developers
     }
 
     public OpenFoodFactsResponse getProduct(String productCode,List<ProductField> fields){

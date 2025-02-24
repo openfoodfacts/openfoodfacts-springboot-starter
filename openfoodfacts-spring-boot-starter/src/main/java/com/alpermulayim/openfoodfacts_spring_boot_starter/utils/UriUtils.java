@@ -1,9 +1,11 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter.utils;
 
+import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -13,22 +15,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Alper Mulayim  https://github.com/AlperMulayim
+ * @author Alper Mulayim  <a href="https://github.com/AlperMulayim">...</a>
  */
 
 @Component("openFoodFactsUrlUtils")
 public class UriUtils {
 
-    private final String productsPath = "/api/v2/product/";
-    private final String searchPath = "/api/v2/search";
+    private String productsPath;
+    private String searchPath;
+    private String productsPathJsonPrefix;
+    private String productDelimeter;
+
+    @Autowired
+    public UriUtils(OpenFoodFactsWebClientProperties properties) {
+        productsPath = properties.productPath();
+        searchPath = properties.searchPath();
+        productsPathJsonPrefix = properties.productsPathJsonPrefix();
+        productDelimeter = properties.productsPathJsonDelimeter();
+
+    }
 
     private String getProductPath(String productCode){
-        return productsPath + productCode + ".json";
+        return productsPath + productDelimeter + productCode + productsPathJsonPrefix ;
     }
 
     public String productsUri(String productCode, List<ProductField> fields) throws OpenFoodFactsException{
 
         String path = getProductPath(productCode);
+        System.out.println(path);
 
         if(productCode == null ||productCode.isEmpty()) {
             throw new OpenFoodFactsException("ProductCode could not be null");
@@ -52,6 +66,7 @@ public class UriUtils {
 
     public String productsUri(String productCode) throws OpenFoodFactsException {
         String path = getProductPath(productCode);
+        System.out.println(path);
         if(productCode == null || productCode.isEmpty()){
             throw new OpenFoodFactsException("Product Code could not be null");
         }
