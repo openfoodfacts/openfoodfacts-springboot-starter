@@ -1,0 +1,4 @@
+openfoodfacts:
+  base-url: "https://world.openfoodfacts.net"
+  search-path: "/api/v2/search"
+  product-path: "/api/v2/product"
