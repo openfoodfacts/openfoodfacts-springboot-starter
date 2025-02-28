@@ -1,5 +1,4 @@
 # OpenFoodFacts Spring Boot Starter Maven Package
-Fully customizable web client package for spring boot applications.
 ## Background.
 
  **openfoodfacts-spring-boot-starter**  maven package implemented for easy connection to OpenFoodFacts  REST API’s on enterprise applications.  
