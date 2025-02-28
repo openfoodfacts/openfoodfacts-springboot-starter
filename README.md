@@ -10,11 +10,8 @@ Fully customizable web client package for spring boot applications.
 
 ```java
 OpenFoodFactsResponse getProduct(String productCode, List<ProductField> fields);
-
 OpenFoodFactsResponse getProduct(String productCode);
-
 OpenFoodFactsResponse getProduct(ProductRequest request);
-
 OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) ;
 ```
 
