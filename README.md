@@ -68,7 +68,7 @@ public class DemoConfig {
     }
 }
 ```
-**Customizable endpoints and paths via application.yml or [application.properties](http://application.properties) files** 
+**Customizable endpoints and paths via application.yml or application.properties files** 
 
 You are able to customize starter endpoints and base urls, if you do not customize webclient have default configuration. 
 
