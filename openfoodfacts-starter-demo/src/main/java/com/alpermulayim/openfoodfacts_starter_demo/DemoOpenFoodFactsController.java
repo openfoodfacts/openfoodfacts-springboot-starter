@@ -31,4 +31,9 @@ public class DemoOpenFoodFactsController {
     OpenFoodFactsPageResponse getProduct(@RequestBody ProductSearchRequest request) throws InvocationTargetException, IllegalAccessException {
         return service.search(request);
     }
+
+    @GetMapping("/searchCustom")
+    OpenFoodFactsPageResponse getProductCustom() throws InvocationTargetException, IllegalAccessException {
+        return service.searchCustom();
+    }
 }

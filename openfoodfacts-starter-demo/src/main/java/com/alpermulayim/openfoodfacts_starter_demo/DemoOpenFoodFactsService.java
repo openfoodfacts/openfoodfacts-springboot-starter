@@ -42,4 +42,20 @@ public class DemoOpenFoodFactsService {
             throws InvocationTargetException, IllegalAccessException {
         return webClient.searchProduct(request);
     }
+
+    public OpenFoodFactsPageResponse searchCustom() throws InvocationTargetException, IllegalAccessException {
+        List<ProductField> fields = new ArrayList<>();
+        fields.add(ProductField.PRODUCT_NAME);
+        fields.add(ProductField.CODE);
+        fields.add(ProductField.IMAGE_URL);
+        fields.add(ProductField.BRANDS);
+        fields.add(ProductField.INGREDIENTS_TEXT);
+
+        ProductSearchRequest request = ProductSearchRequest.builder()
+                .brandsTags("nutella")
+                .pageSize(3)
+                .fields(fields)
+                .build();
+        return webClient.searchProduct(request);
+    }
 }
