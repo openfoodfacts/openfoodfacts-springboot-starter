@@ -3,10 +3,13 @@ package com.alpermulayim.openfoodfacts_starter_demo;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
+import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
 /**
  * @author Alper Mulayim  https://github.com/AlperMulayim
  */
@@ -35,5 +38,10 @@ public class DemoOpenFoodFactsController {
     @GetMapping("/searchCustom")
     OpenFoodFactsPageResponse getProductCustom() throws InvocationTargetException, IllegalAccessException {
         return service.searchCustom();
+    }
+
+    @GetMapping("/converted")
+    List<DemoProduct> getCustomConvertedProducts() throws InvocationTargetException, IllegalAccessException {
+       return service.searchDemoProducts();
     }
 }

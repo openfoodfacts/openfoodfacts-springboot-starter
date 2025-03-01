@@ -1,4 +1,8 @@
 openfoodfacts:
-  base-url: "https://world.openfoodfacts.net"
+  base-url: "https://world.openfoodfacts.org"
   search-path: "/api/v2/search"
   product-path: "/api/v2/product"
+
+springdoc:
+  swagger-ui:
+    enabled: true

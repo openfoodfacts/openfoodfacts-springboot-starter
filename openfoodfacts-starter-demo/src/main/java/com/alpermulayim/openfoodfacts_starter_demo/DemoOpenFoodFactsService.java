@@ -5,12 +5,15 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
+import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author Alper Mulayim  https://github.com/AlperMulayim
  */
@@ -57,5 +60,30 @@ public class DemoOpenFoodFactsService {
                 .fields(fields)
                 .build();
         return webClient.searchProduct(request);
+    }
+
+    public List<DemoProduct> searchDemoProducts() throws InvocationTargetException, IllegalAccessException {
+        ProductSearchRequest request = searchRequest("eti",5);
+        OpenFoodFactsPageResponse response = webClient.searchProduct(request);
+
+        return response.products().stream().map((product -> new DemoProduct(
+                product.code(), product.product_name(),product.imageUrl())))
+                .collect(Collectors.toList());
+
+    }
+
+    public ProductSearchRequest searchRequest(String brand, Integer pageSize){
+        List<ProductField> fields = new ArrayList<>();
+        fields.add(ProductField.PRODUCT_NAME);
+        fields.add(ProductField.CODE);
+        fields.add(ProductField.IMAGE_URL);
+        fields.add(ProductField.BRANDS);
+        fields.add(ProductField.INGREDIENTS_TEXT);
+
+        return ProductSearchRequest.builder()
+                .brandsTags(brand)
+                .pageSize(pageSize)
+                .fields(fields)
+                .build();
     }
 }
