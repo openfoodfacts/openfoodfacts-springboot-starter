@@ -123,5 +123,16 @@ public class DemoOpenFoodFactsService {
                 .build();
         return webClient.searchProduct(request);
     }
+
+ public List<DemoProduct> searchDemoProducts() {
+	//will request for ETI products total 5. 
+	ProductSearchRequest request = searchRequest("eti",5);
+	OpenFoodFactsPageResponse response = webClient.searchProduct(request);
+
+	//convert the OpenFoodFacts product to custom product <DemoProduct> 
+	return response.products().stream()
+		.map(product ->new DemoProduct(product.code(), product.product_name(),product.imageUrl()))
+		.collect(Collectors.toList());
+    }
 }
 ```
