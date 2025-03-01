@@ -78,6 +78,7 @@ openfoodfacts:
 
 Sample codes and configuration please check [openfoodfacts-starter-demo](https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter/tree/main/openfoodfacts-starter-demo)
 
+Demo Application README: [Demo Application Readme](https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter/blob/main/DemoApp-README.md)
 ```java
 @Service
 public class DemoOpenFoodFactsService {
