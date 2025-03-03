@@ -10,6 +10,8 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 public record OpenFoodFactsWebClientProperties (
         @DefaultValue("https://world.openfoodfacts.org")
         String baseUrl,
+        @DefaultValue("https://prices.openfoodfacts.org")
+        String pricesBaseUrl,
         @DefaultValue("/api/v2/search")
         String searchPath,
         @DefaultValue("/api/v2/product")
