@@ -13,7 +13,7 @@
 
     <groupId>com.alpermulayim</groupId>
     <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-    <version>0.0.2.3</version>
+    <version>0.0.2.4</version>
     <name>openfoodfacts-spring-boot-starter</name>
     <description>OpenFoodFacts and OpenPricesFacts REST API Client Spring Boot Starter</description>
     <url/>
