@@ -13,9 +13,9 @@
 
     <groupId>com.alpermulayim</groupId>
     <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-    <version>0.0.2.1</version>
+    <version>0.0.2.3</version>
     <name>openfoodfacts-spring-boot-starter</name>
-    <description>Open Food Facts REST API Client Spring Boot Starter</description>
+    <description>OpenFoodFacts and OpenPricesFacts REST API Client Spring Boot Starter</description>
     <url/>
 
     <licenses>
@@ -23,7 +23,10 @@
     </licenses>
 
     <developers>
-        <developer/>
+        <developer>
+            <name>Alper Mulayim</name>
+            <url>https://github.com/AlperMulayim</url>
+        </developer>
     </developers>
 
     <scm>
