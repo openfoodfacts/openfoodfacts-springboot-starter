@@ -71,8 +71,11 @@ You are able to customize starter endpoints and base urls, if you do not customi
 ```java
 openfoodfacts:
   base-url: "https://world.openfoodfacts.org"
+  prices-base-url: "https://prices.openfoodfacts.org",
   search-path: "/api/v2/search"
   product-path: "/api/v2/product"
+  prices-path:"/api/v3/prices"
+  
 ```
  **Ready to use 🎉**
 
@@ -135,4 +138,48 @@ public class DemoOpenFoodFactsService {
 		.collect(Collectors.toList());
     }
 }
+```
+OpenPrices Demo Usecase
+```java
+  public OpenPriceFactsResponse getProductPrice(String productCode){
+        return webClient.findPrice(productCode);
+    }
+
+    public OpenPriceFactsResponse searchPrice(PriceRequest request){
+        return webClient.findPrice(request);
+    }
+
+    public OpenPriceFactsResponse searchPriceCustom(){
+        PriceRequest priceRequest = PriceRequest.builder()
+                .priceGt(2.0)
+                .priceLt(5.0)
+                .size(3)
+                .build();
+        return webClient.findPrice(priceRequest);
+    }
+
+    public List<DemoPrice> myDemoSearchMyProductPrices(){
+        PriceRequest priceRequest = PriceRequest.builder()
+                .priceGt(2.0)
+                .priceLt(5.0)
+                .build();
+
+        OpenPriceFactsResponse priceResponse = webClient.findPrice(priceRequest);
+
+        return priceResponse.prices().stream()
+                .map(productPrice -> createDemoPrice(productPrice))
+                .collect(Collectors.toList());
+    }
+    private DemoPrice createDemoPrice(ProductPrice productPrice){
+        String productName = productPrice.productName();
+        String productCode = productPrice.productCode();
+        String brand = productPrice.product().brands();
+        String country = productPrice.location().osmAddressCountryCode();
+        Double price = productPrice.price();
+        String currency = productPrice.currency();
+        String store = productPrice.location().osmBrand();
+        String imageUrl = productPrice.product().imageUrl();
+
+        return new DemoPrice(productCode,productName,brand,store,country,currency,price,imageUrl);
+    }
 ```
