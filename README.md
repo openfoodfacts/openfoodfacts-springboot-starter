@@ -33,9 +33,9 @@ OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) ;
 
 ```java
 <dependency>
-    <groupId>com.alpermulayim</groupId>
-    <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+  <groupId>com.alpermulayim</groupId>
+  <artifactId>openfoodfacts-spring-boot-starter</artifactId>
+  <version>0.0.2.3</version>
 </dependency>
 ```
 
