@@ -3,6 +3,7 @@ package com.alpermulayim.openfoodfacts_spring_boot_starter;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientConfiguration;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.testdata.TestData;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,9 +26,10 @@ public class OpenFoodFactsWebClientTest {
             ))
             .withPropertyValues(
                     "openfoodfacts.base-url=https://world.openfoodfacts.org",
+                    "openfoodfacts.prices-base-url=https://prices.openfoodfacts.org",
                     "openfoodfacts.search-path=/api/v2/search",
                     "openfoodfacts.product-path=/api/v2/product",
-                    "openfoodfacts.productsPathJsonDelimeter=/"
+                    "openfoodfacts.prices-path=/api/v3/prices"
             );
 
     @BeforeEach
@@ -99,6 +101,37 @@ public class OpenFoodFactsWebClientTest {
         contextRunner.run(context -> {
             String productPath = context.getEnvironment().getProperty("openfoodfacts.product-path");
             assertEquals(TestData.defaultWebClientProperties().productPath(),productPath);
+        });
+    }
+
+    @Test
+    void whenWebClientPropertiesPricePathSettedShouldSameOnProperties(){
+        contextRunner.run(context -> {
+            String pricePath = context.getEnvironment().getProperty("openfoodfacts.prices-path");
+            assertEquals(TestData.defaultWebClientProperties().pricePath(),pricePath);
+        });
+    }
+
+    @Test
+    void whenWebClientPropertiesPriceBaseUrlSettedShouldSameOnProperties(){
+        contextRunner.run(context -> {
+            String priceUrl = context.getEnvironment().getProperty("openfoodfacts.prices-base-url");
+            assertEquals(TestData.defaultWebClientProperties().pricesBaseUrl(),priceUrl);
+        });
+    }
+
+    @Test
+    void whenWebClientCalledForProductPriceWithEmptyProductCodeWillThrowsException(){
+        contextRunner.run(context -> {
+           assertThrows(OpenFoodFactsException.class,()->webClient.findPrice(""));
+        });
+    }
+
+    @Test
+    void whenWebClientCalledForProductPriceWithNullRequestWillThrowsException(){
+        contextRunner.run(context -> {
+            PriceRequest request = null;
+            assertThrows(OpenFoodFactsException.class,()->webClient.findPrice(request));
         });
     }
 }

@@ -3,6 +3,7 @@ package com.alpermulayim.openfoodfacts_spring_boot_starter.testdata;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class TestData {
         return sampleFields;
     }
 
+
     public static ProductRequest emptyProductRequest(){
         return new ProductRequest("",null);
     }
@@ -44,10 +46,22 @@ public class TestData {
     public static OpenFoodFactsWebClientProperties defaultWebClientProperties(){
         return new OpenFoodFactsWebClientProperties("https://world.openfoodfacts.org","https://prices.openfoodfacts.org"
                 ,"/api/v2/search",
-                "/api/v2/product");
+                "/api/v2/product","/api/v3/prices");
     }
     public static OpenFoodFactsWebClientProperties nullWebClientProperties(){
         return new OpenFoodFactsWebClientProperties(null,null,
-                null,null);
+                null,null,null);
     }
+
+
+    public static PriceRequest validPriceRequest(){
+        return  PriceRequest.builder()
+                .productCode(sampleProductCode())
+                .locationId(2)
+                .priceLt(100.0)
+                .priceGt(200.0)
+                .currency("EUR")
+                .build();
+    }
+
 }

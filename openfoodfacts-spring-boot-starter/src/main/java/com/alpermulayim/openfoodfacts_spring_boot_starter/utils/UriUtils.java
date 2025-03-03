@@ -5,8 +5,11 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFac
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.lang.reflect.InvocationTargetException;
@@ -23,12 +26,14 @@ public class UriUtils {
 
     private String productsPath;
     private String searchPath;
+    private String pricePath;
 
 
     @Autowired
     public UriUtils(OpenFoodFactsWebClientProperties properties) {
         productsPath = properties.productPath();
         searchPath = properties.searchPath();
+        pricePath = properties.pricePath();
     }
 
 
@@ -83,6 +88,34 @@ public class UriUtils {
             }
         }
 
+        return uriBuilder.build().toUriString();
+    }
+
+    public String findPriceUri(String productCode){
+        return UriComponentsBuilder.fromPath(pricePath)
+                .queryParam("product_code", productCode)
+                .build()
+                .toUriString();
+    }
+
+    public String findPriceUri(PriceRequest priceRequest) throws OpenFoodFactsException{
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromPath(pricePath);
+        List<RecordComponent> recordComponents = List.of(priceRequest.getClass().getRecordComponents());
+
+        for(RecordComponent component :recordComponents){
+            try {
+                Object value = component.getAccessor().invoke(priceRequest);
+                JsonProperty jsonProperty = component.getAccessor().getAnnotation(JsonProperty.class);
+
+                if(value != null){
+                    uriBuilder.queryParam(jsonProperty.value(),value);
+                }
+
+            } catch (Exception e) {
+                throw new OpenFoodFactsException("[OpenFoodFactsSpringBootStarter] Price request could not parsed.");
+            }
+        }
         return uriBuilder.build().toUriString();
     }
 

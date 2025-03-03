@@ -1,12 +1,14 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceFactsResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import java.util.List;
 @Service("openFoodFactsWebClient")
 public class OpenFoodFactsWebClient {
     private RestClient restClient;
+    private RestClient pricesRestClient;
     private UriUtils uriUtils;
     private OpenFoodFactsWebClientProperties clientProperties;
 
@@ -29,8 +32,10 @@ public class OpenFoodFactsWebClient {
         this.clientProperties = clientProperties;
         this.uriUtils = new UriUtils(clientProperties);
         restClient = RestClient.create(clientProperties.baseUrl());
+        pricesRestClient = RestClient.create(clientProperties.pricesBaseUrl());
 
         //TODO: add init properties print for caller developers
+        System.out.println("OpenFoodFactsWebClient initialized with "+ clientProperties);
     }
 
     public OpenFoodFactsResponse getProduct(String productCode,List<ProductField> fields){
@@ -74,6 +79,26 @@ public class OpenFoodFactsWebClient {
                 .uri(uriUtils.searchUri(request))
                 .retrieve()
                 .body(OpenFoodFactsPageResponse.class);
+    }
+
+    public OpenPriceFactsResponse findPrice(String productCode)  throws  OpenFoodFactsException{
+        if(productCode == null ||productCode.isEmpty() ){
+            throw new OpenFoodFactsException("Product code is null or empty");
+        }
+        return pricesRestClient.get()
+                .uri(uriUtils.findPriceUri(productCode))
+                .retrieve()
+                .body(OpenPriceFactsResponse.class);
+    }
+
+    public OpenPriceFactsResponse findPrice(PriceRequest priceRequest) throws OpenFoodFactsException{
+        if(priceRequest == null ){
+            throw new OpenFoodFactsException("PriceRequest is null");
+        }
+        return pricesRestClient.get()
+                .uri(uriUtils.findPriceUri(priceRequest))
+                .retrieve()
+                .body(OpenPriceFactsResponse.class);
     }
 
 }

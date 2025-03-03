@@ -51,17 +51,17 @@
 		<dependency>
 			<groupId>com.alpermulayim</groupId>
 			<artifactId>openfoodfacts-spring-boot-starter</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2.1</version>
 		</dependency>
 
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>github</id>
-			<url>https://maven.pkg.github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>
-		</repository>
-	</repositories>
+<!--	<repositories>-->
+<!--		<repository>-->
+<!--			<id>github</id>-->
+<!--			<url>https://maven.pkg.github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>-->
+<!--		</repository>-->
+<!--	</repositories>-->
 
 	<build>
 		<plugins>

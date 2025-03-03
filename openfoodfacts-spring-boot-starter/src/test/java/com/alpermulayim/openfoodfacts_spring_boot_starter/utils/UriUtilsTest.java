@@ -5,7 +5,9 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWe
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.testdata.TestData;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
@@ -13,6 +15,9 @@ import org.springframework.boot.autoconfigure.web.client.RestClientAutoConfigura
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.RecordComponent;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -27,9 +32,10 @@ public class UriUtilsTest {
             ))
             .withPropertyValues(
                     "openfoodfacts.base-url=https://world.openfoodfacts.org",
+                    "openfoodfacts.prices-base-url=https://prices.openfoodfacts.org",
                     "openfoodfacts.search-path=/api/v2/search",
                     "openfoodfacts.product-path=/api/v2/product",
-                    "openfoodfacts.productsPathJsonDelimeter=/"
+                    "openfoodfacts.prices-path=/api/v3/prices"
             );
 
 
@@ -127,4 +133,31 @@ public class UriUtilsTest {
         assertTrue(uriUtils.productsUri(TestData.sampleProductCode(),TestData.sampleFields()).contains(TestData.sampleProductCode()));
         assertTrue(uriUtils.productsUri(TestData.sampleProductCode(),TestData.sampleFields()).contains("fields"));
     }
+
+    @Test
+    void  whenProductFindPriceUriInvokedUriStringShouldIncludeGivenProductCode(){
+        assertTrue(uriUtils.findPriceUri("1234").contains("1234"));
+    }
+
+    @Test
+    void  whenProductFindPriceUriInvokedUriStringShouldIncludeProductQueryParam(){
+        assertTrue(uriUtils.findPriceUri(TestData.sampleProductCode()).contains(TestData.sampleProductCode()));
+    }
+
+    @Test
+    void  whenProductFindPriceUriCalledWithRequestShouldIncludRequestData() throws Exception {
+        PriceRequest request = TestData.validPriceRequest();
+        String uri = uriUtils.findPriceUri(request);
+        List<RecordComponent> recordComponents = List.of(request.getClass().getRecordComponents());
+
+        for(RecordComponent component: recordComponents){
+            Object value = component.getAccessor().invoke(request);
+            JsonProperty jsonProperty = component.getAccessor().getAnnotation(JsonProperty.class);
+            if(value != null) {
+                assertTrue(uri.contains(jsonProperty.value()));
+                assertTrue(uri.contains(String.valueOf(value)));
+            }
+        }
+    }
+
 }

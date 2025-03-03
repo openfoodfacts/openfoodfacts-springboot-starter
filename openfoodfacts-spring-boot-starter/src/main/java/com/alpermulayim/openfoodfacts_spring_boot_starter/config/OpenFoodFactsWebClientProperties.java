@@ -15,6 +15,8 @@ public record OpenFoodFactsWebClientProperties (
         @DefaultValue("/api/v2/search")
         String searchPath,
         @DefaultValue("/api/v2/product")
-        String productPath
+        String productPath,
+        @DefaultValue("/api/v1/prices")
+        String pricePath
 ){}
 
