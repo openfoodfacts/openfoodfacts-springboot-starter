@@ -74,7 +74,7 @@ openfoodfacts:
   prices-base-url: "https://prices.openfoodfacts.org",
   search-path: "/api/v2/search"
   product-path: "/api/v2/product"
-  prices-path:"/api/v3/prices"
+  prices-path:"/api/v1/prices"
   
 ```
  **Ready to use 🎉**
