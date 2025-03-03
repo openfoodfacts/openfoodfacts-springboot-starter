@@ -1,8 +1,11 @@
 package com.alpermulayim.openfoodfacts_starter_demo;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceFactsResponse;
+import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoPrice;
 import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +46,25 @@ public class DemoOpenFoodFactsController {
     @GetMapping("/converted")
     List<DemoProduct> getCustomConvertedProducts() throws InvocationTargetException, IllegalAccessException {
        return service.searchDemoProducts();
+    }
+
+    @GetMapping("/price")
+    OpenPriceFactsResponse getPriceForProduct(@RequestParam("code") String code){
+        return service.getProductPrice(code);
+    }
+
+    @GetMapping("/price/search")
+    OpenPriceFactsResponse pricesSearch(@RequestBody PriceRequest request){
+        return service.searchPrice(request);
+    }
+
+    @GetMapping("/price/custom")
+    OpenPriceFactsResponse pricesSearch(){
+        return service.searchPriceCustom();
+    }
+
+    @GetMapping("/price/mySearch")
+    List<DemoPrice> pricesSearchMy(){
+        return service.myDemoSearchMyProductPrices();
     }
 }
