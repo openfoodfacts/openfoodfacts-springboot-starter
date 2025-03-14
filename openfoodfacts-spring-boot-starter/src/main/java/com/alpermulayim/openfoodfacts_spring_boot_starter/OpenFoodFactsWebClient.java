@@ -1,6 +1,7 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
@@ -11,11 +12,17 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearch
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceFactsResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import org.springframework.web.reactive.function.client.WebClient;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
 /**
  * @author Alper Mulayim  https://github.com/AlperMulayim
  */
@@ -26,6 +33,7 @@ public class OpenFoodFactsWebClient {
     private RestClient pricesRestClient;
     private UriUtils uriUtils;
     private OpenFoodFactsWebClientProperties clientProperties;
+    private WebClient webClient;
 
     @Autowired
     public OpenFoodFactsWebClient(OpenFoodFactsWebClientProperties clientProperties) {
@@ -33,6 +41,7 @@ public class OpenFoodFactsWebClient {
         this.uriUtils = new UriUtils(clientProperties);
         restClient = RestClient.create(clientProperties.baseUrl());
         pricesRestClient = RestClient.create(clientProperties.pricesBaseUrl());
+        webClient = WebClient.create(clientProperties.baseUrl());
 
         //TODO: add init properties print for caller developers
         System.out.println("OpenFoodFactsWebClient initialized with "+ clientProperties);
@@ -100,5 +109,43 @@ public class OpenFoodFactsWebClient {
                 .retrieve()
                 .body(OpenPriceFactsResponse.class);
     }
+
+
+    public String uploadProductImage(ProductImageUploadRequest request) throws OpenFoodFactsException{
+
+        if(clientProperties.username() == null && clientProperties.password() == null){
+            throw  new OpenFoodFactsException("Client Username or Password is Invalid, cannot run image upload");
+        }
+
+        String username = clientProperties.username().orElseThrow(() ->
+                new OpenFoodFactsException("Client Username or Password is Invalid, cannot run image upload"));
+
+        String password = clientProperties.password().orElseThrow(()->
+                new OpenFoodFactsException("Client Username or Password is Invalid cannot run image upload"));
+
+        String auth = username + ":" + password;
+        String authorization = java.util.Base64.getEncoder().encodeToString(auth.getBytes());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Basic " + authorization);
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        String imageField = request.facet() + "_" + request.language();
+        String imageUploadFieldKey ="imgupload_"+ request.facet() +"_"+ request.language();
+
+        MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
+        multipartBodyBuilder.part("code", request.productCode());
+        multipartBodyBuilder.part("imagefield", imageField);
+        multipartBodyBuilder.part(imageUploadFieldKey, request.file().getResource());
+
+        return webClient.post()
+                .uri(clientProperties.productImagePath())
+                .headers(httpHeaders -> httpHeaders.addAll(headers))
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .bodyValue(multipartBodyBuilder.build())
+                .retrieve()
+                .toEntity(String.class).block().getBody();
+    }
+
 
 }

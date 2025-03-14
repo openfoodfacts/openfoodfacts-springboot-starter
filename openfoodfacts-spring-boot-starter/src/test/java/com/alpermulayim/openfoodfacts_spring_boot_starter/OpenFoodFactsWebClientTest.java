@@ -1,7 +1,6 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientConfiguration;
-import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.testdata.TestData;
@@ -29,7 +28,8 @@ public class OpenFoodFactsWebClientTest {
                     "openfoodfacts.prices-base-url=https://prices.openfoodfacts.org",
                     "openfoodfacts.search-path=/api/v2/search",
                     "openfoodfacts.product-path=/api/v2/product",
-                    "openfoodfacts.prices-path=/api/v3/prices"
+                    "openfoodfacts.prices-path=/api/v3/prices",
+                    "openfoodfacts.product-image-path=/cgi/product_image_upload.pl"
             );
 
     @BeforeEach
@@ -134,4 +134,12 @@ public class OpenFoodFactsWebClientTest {
             assertThrows(OpenFoodFactsException.class,()->webClient.findPrice(request));
         });
     }
+
+    @Test
+    void whenWebClientCalledForProductPriceWithNullRequestWillThrowsExceptio2(){
+        contextRunner.run(context -> {
+            assertThrows(OpenFoodFactsException.class,()->webClient.uploadProductImage(TestData.validImageRequest()));
+        });
+    }
+
 }

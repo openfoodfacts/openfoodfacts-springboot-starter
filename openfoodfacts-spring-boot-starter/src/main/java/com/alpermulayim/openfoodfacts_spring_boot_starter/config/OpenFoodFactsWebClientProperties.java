@@ -3,6 +3,8 @@ package com.alpermulayim.openfoodfacts_spring_boot_starter.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import java.util.Optional;
+
 /**
  * @author Alper Mulayim  <a href="https://github.com/AlperMulayim">...</a>
  */
@@ -17,6 +19,10 @@ public record OpenFoodFactsWebClientProperties (
         @DefaultValue("/api/v2/product")
         String productPath,
         @DefaultValue("/api/v1/prices")
-        String pricePath
+        String pricePath,
+        @DefaultValue("/cgi/product_image_upload.pl")
+        String productImagePath,
+        Optional<String> username,
+        Optional<String> password
 ){}
 

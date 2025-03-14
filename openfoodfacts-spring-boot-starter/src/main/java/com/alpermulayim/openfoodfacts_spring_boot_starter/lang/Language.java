@@ -74,8 +74,18 @@ public enum Language {
         this.code = code;
     }
 
-    public String getCode() {
+    public String get() {
         return code;
     }
+
+    public static Language fromCode(String code) {
+        for (Language lang : Language.values()) {
+            if (lang.get().equalsIgnoreCase(code)) {
+                return lang;
+            }
+        }
+        throw new IllegalArgumentException("Invalid language code: " + code);
+    }
+
 }
 

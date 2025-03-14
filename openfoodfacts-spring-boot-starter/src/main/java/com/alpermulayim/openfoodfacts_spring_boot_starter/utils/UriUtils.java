@@ -8,10 +8,8 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearch
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.lang.reflect.InvocationTargetException;
@@ -30,13 +28,14 @@ public class UriUtils {
     private String productsPath;
     private String searchPath;
     private String pricePath;
-
+    private String productImgPath;
 
     @Autowired
     public UriUtils(OpenFoodFactsWebClientProperties properties) {
         productsPath = properties.productPath();
         searchPath = properties.searchPath();
         pricePath = properties.pricePath();
+        productImgPath = properties.productImagePath();
     }
 
     public String productsUri(String productCode, List<ProductField> fields, Optional<Language> lang){
@@ -60,7 +59,7 @@ public class UriUtils {
         return UriComponentsBuilder.fromPath(productsPath)
                 .pathSegment(productCode)
                 .queryParam("fields",fieldsStr)
-                .queryParam("lc",language.getCode())
+                .queryParam("lc",language.get())
                 .build()
                 .toUriString();
     }
