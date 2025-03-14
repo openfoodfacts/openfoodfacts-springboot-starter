@@ -2,8 +2,10 @@ package com.alpermulayim.openfoodfacts_starter_demo;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.OpenFoodFactsWebClient;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.openprices.ProductPrice;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.lang.Language;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
@@ -11,8 +13,11 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.O
 import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoPrice;
 import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoProduct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +136,18 @@ public class DemoOpenFoodFactsService {
         String imageUrl = productPrice.product().imageUrl();
 
         return new DemoPrice(productCode,productName,brand,store,country,currency,price,imageUrl);
+    }
+
+    public String uploadProductImage(String code, String lang, String facet, MultipartFile file) throws IOException {
+
+        ProductImageUploadRequest request = ProductImageUploadRequest.builder()
+                .productCode(code)
+                .language(Language.fromCode(lang))
+                .file(file)
+                .facet(facet)
+                .build();
+
+        return  webClient.uploadProductImage(request);
     }
 }
 

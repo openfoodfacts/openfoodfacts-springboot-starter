@@ -1,6 +1,7 @@
 package com.alpermulayim.openfoodfacts_starter_demo;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
@@ -8,8 +9,11 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.O
 import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoPrice;
 import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoProduct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -66,5 +70,10 @@ public class DemoOpenFoodFactsController {
     @GetMapping("/price/mySearch")
     List<DemoPrice> pricesSearchMy(){
         return service.myDemoSearchMyProductPrices();
+    }
+
+    @PostMapping("image")
+    String uploadProductImage( @RequestParam("code") String code,@RequestParam("lang") String lang, @RequestParam("facet")  String facet, @RequestParam("file") MultipartFile file) throws IOException {
+        return service.uploadProductImage(code,lang,facet,file);
     }
 }

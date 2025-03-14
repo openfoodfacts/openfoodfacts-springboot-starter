@@ -1,7 +1,20 @@
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+server:
+  tomcat:
+    max-http-post-size: 52428800  # 50MB in bytes
+
 openfoodfacts:
   base-url: "https://world.openfoodfacts.org"
   search-path: "/api/v2/search"
   product-path: "/api/v2/product"
+  username: "${OPEN_FOOD_FACTS_USERNAME}"
+  password: "${OPEN_FOOD_FACTS_PASSWORD}"
 
 springdoc:
   swagger-ui:
