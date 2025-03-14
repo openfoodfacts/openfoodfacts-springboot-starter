@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.RecordComponent;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -160,4 +161,19 @@ public class UriUtilsTest {
         }
     }
 
+    @Test
+    void whenProductsUrlCreatedWithLanguageUrlWillIncludeLanguageCode(){
+       String url = uriUtils.productsUri(TestData.sampleProductCode,
+               TestData.sampleFields(),
+               Optional.of(TestData.langTurkish));
+       assertTrue(url.contains("lc="+TestData.langTurkish.getCode()));
+    }
+
+    @Test
+    void whenProductsUrlCreatedWithEmptyLangDefaultLangEnglishIncluded(){
+        String url = uriUtils.productsUri(TestData.sampleProductCode,
+                TestData.sampleFields(),
+                Optional.empty());
+        assertTrue(url.contains("lc="+TestData.langEnglish.getCode()));
+    }
 }

@@ -1,6 +1,7 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter.testdata;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.lang.Language;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
@@ -13,6 +14,9 @@ public class TestData {
     public static final  String sampleProductCode = "5449000000996";
     public static final String emptyProductCode = "";
     public static final ProductRequest nullProductRequest = null;
+    public static  final Language langEnglish = Language.ENGLISH;
+    public static  final Language langTurkish = Language.TURKISH;
+    public static  final Language langFrench = Language.FRENCH;
 
     public static String sampleProductCode(){
         return sampleProductCode;

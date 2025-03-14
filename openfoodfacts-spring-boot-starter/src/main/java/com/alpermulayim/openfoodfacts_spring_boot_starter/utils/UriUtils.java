@@ -2,11 +2,13 @@ package com.alpermulayim.openfoodfacts_spring_boot_starter.utils;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.lang.Language;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriBuilder;
@@ -15,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.RecordComponent;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -36,9 +39,7 @@ public class UriUtils {
         pricePath = properties.pricePath();
     }
 
-
-    public String productsUri(String productCode, List<ProductField> fields) throws OpenFoodFactsException{
-
+    public String productsUri(String productCode, List<ProductField> fields, Optional<Language> lang){
         if(productCode == null ||productCode.isEmpty()) {
             throw new OpenFoodFactsException("ProductCode could not be null");
         }
@@ -50,6 +51,8 @@ public class UriUtils {
                     .toUriString();
         }
 
+        Language language = lang.orElse(Language.ENGLISH);
+
         String fieldsStr = fields.stream()
                 .map(ProductField::get)
                 .collect(Collectors.joining(","));
@@ -57,8 +60,13 @@ public class UriUtils {
         return UriComponentsBuilder.fromPath(productsPath)
                 .pathSegment(productCode)
                 .queryParam("fields",fieldsStr)
+                .queryParam("lc",language.getCode())
                 .build()
                 .toUriString();
+    }
+
+    public String productsUri(String productCode, List<ProductField> fields) throws OpenFoodFactsException{
+        return productsUri(productCode,fields,Optional.empty());
     }
 
     public String productsUri(String productCode) throws OpenFoodFactsException {
