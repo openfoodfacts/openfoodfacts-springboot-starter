@@ -33,5 +33,5 @@ jobs:
       uses: cicirello/javadoc-cleanup@v1.3.7
       with:
         # The path to the root of the website
-        path-to-root: /openfoodfacts-spring-boot-starter/openfoodfacts-spring-boot-starter/
+        path-to-root: openfoodfacts-spring-boot-starter/
           
