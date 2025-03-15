@@ -166,7 +166,7 @@ public class UriUtilsTest {
        String url = uriUtils.productsUri(TestData.sampleProductCode,
                TestData.sampleFields(),
                Optional.of(TestData.langTurkish));
-       assertTrue(url.contains("lc="+TestData.langTurkish.get()));
+       assertTrue(url.contains("lc="+TestData.langTurkish.code()));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class UriUtilsTest {
         String url = uriUtils.productsUri(TestData.sampleProductCode,
                 TestData.sampleFields(),
                 Optional.empty());
-        assertTrue(url.contains("lc="+TestData.langEnglish.get()));
+        assertTrue(url.contains("lc="+TestData.langEnglish.code()));
     }
 
 }

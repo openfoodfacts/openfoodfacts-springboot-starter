@@ -59,7 +59,7 @@ public class UriUtils {
         return UriComponentsBuilder.fromPath(productsPath)
                 .pathSegment(productCode)
                 .queryParam("fields",fieldsStr)
-                .queryParam("lc",language.get())
+                .queryParam("lc",language.code())
                 .build()
                 .toUriString();
     }
