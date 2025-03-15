@@ -11,7 +11,11 @@
 OpenFoodFactsResponse getProduct(String productCode, List<ProductField> fields);
 OpenFoodFactsResponse getProduct(String productCode);
 OpenFoodFactsResponse getProduct(ProductRequest request);
-OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) ;
+OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request);
+OpenPriceFactsResponse findPrice(PriceRequest priceRequest);
+OpenPriceFactsResponse findPrice(String productCode);
+ProductSaveResponse saveProduct(ProductSaveRequest request);
+String uploadProductImage(ProductImageUploadRequest request);
 ```
 
 ## How to use
@@ -35,7 +39,7 @@ OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) ;
 <dependency>
   <groupId>com.alpermulayim</groupId>
   <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-  <version>0.0.2.3</version>
+  <version>0.0.2.5</version>
 </dependency>
 ```
 
@@ -77,7 +81,7 @@ openfoodfacts:
   prices-path:"/api/v1/prices"
   
 ```
- **Ready to use 🎉**
+## **Ready to use 🎉**
 
 Sample codes and configuration please check [openfoodfacts-starter-demo](https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter/tree/main/openfoodfacts-starter-demo)
 
@@ -139,7 +143,7 @@ public class DemoOpenFoodFactsService {
     }
 }
 ```
-OpenPrices Demo Usecase
+### OpenPrices Demo Usecase
 ```java
   public OpenPriceFactsResponse getProductPrice(String productCode){
         return webClient.findPrice(productCode);
@@ -183,3 +187,33 @@ OpenPrices Demo Usecase
         return new DemoPrice(productCode,productName,brand,store,country,currency,price,imageUrl);
     }
 ```
+
+
+### Product Save Demo
+``````java
+ public ProductSaveResponse saveProductCustom(){
+         ProductSaveRequest request = ProductSaveRequest.builder()
+                    .code("484848484")
+                    .brands("fakebrand-test")
+                    .productName("fakeproduct-test")
+                    .ingredientsText("fake,ingredients,test1,test2,test3")
+                    .comment("fake,comment")
+                    .build();
+         return webClient.saveProduct(request);
+    }
+``````
+
+### Image Upload Demo 
+```````java
+public String uploadProductImage(String code, String lang, String facet, MultipartFile file) throws IOException {
+
+        ProductImageUploadRequest request = ProductImageUploadRequest.builder()
+                .productCode(code)
+                .language(Language.fromCode(lang))
+                .file(file)
+                .facet(facet)
+                .build();
+
+        return  webClient.uploadProductImage(request);
+    }
+```````
