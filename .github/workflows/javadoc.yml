@@ -27,7 +27,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file openfoodfacts-spring-boot-starter/pom.xml
     
     - name: javadoc-cleanup
       uses: cicirello/javadoc-cleanup@v1.3.7
