@@ -1,6 +1,8 @@
 # OpenFoodFacts Spring Boot Starter Maven Package
-## Documentation
-[![image](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github%20Pages&logoColor=white)](https://alpermulayim.github.io/openfoodfacts-spring-boot-starter/)
+
+| Github Page<br>javadoc and more |Author<br>Alper Mulayim |
+|----------|----------|
+| [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github%20Pages&logoColor=white)](https://alpermulayim.github.io/openfoodfacts-spring-boot-starter/) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alpermulayim/) |
 
 **openfoodfacts-spring-boot-starter** Maven package designed to **simplify the integration of OpenFoodFacts REST APIs into Spring Boot** applications. Developers can easily connect to the OpenFoodFacts API without the need to implement any complex RESTful calls.
 
