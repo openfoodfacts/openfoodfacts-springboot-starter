@@ -1,4 +1,4 @@
-# OpenFoodFacts Spring Boot Starter Maven Package
+# OpenFoodFacts Spring Boot Starter Maven Package SDK.
 
 | Github Page<br>javadoc and more |Author<br>Alper Mulayim |
 |----------|----------|
