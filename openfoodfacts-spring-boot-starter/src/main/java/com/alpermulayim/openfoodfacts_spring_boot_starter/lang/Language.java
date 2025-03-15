@@ -74,13 +74,13 @@ public enum Language {
         this.code = code;
     }
 
-    public String get() {
+    public String code() {
         return code;
     }
 
     public static Language fromCode(String code) {
         for (Language lang : Language.values()) {
-            if (lang.get().equalsIgnoreCase(code)) {
+            if (lang.code().equalsIgnoreCase(code)) {
                 return lang;
             }
         }
