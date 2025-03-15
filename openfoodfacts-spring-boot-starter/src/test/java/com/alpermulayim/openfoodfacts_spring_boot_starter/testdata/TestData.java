@@ -6,6 +6,8 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.ProductSaveResponse;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.ArrayList;
@@ -15,17 +17,17 @@ import java.util.Optional;
 public class TestData {
 
     public static final  String sampleProductCode = "5449000000996";
+    public static final String fakeProductCode = "484848484";
     public static final String emptyProductCode = "";
     public static final ProductRequest nullProductRequest = null;
     public static  final Language langEnglish = Language.ENGLISH;
     public static  final Language langTurkish = Language.TURKISH;
     public static  final Language langFrench = Language.FRENCH;
 
-
-
     public static String sampleProductCode(){
         return sampleProductCode;
     }
+    public static String fakeProductCode(){ return  fakeProductCode; }
 
     public static List<ProductField> sampleFields(){
         List<ProductField> sampleFields = new ArrayList<>();
@@ -53,13 +55,19 @@ public class TestData {
         return new ProductRequest(sampleProductCode(),null);
     }
     public static OpenFoodFactsWebClientProperties defaultWebClientProperties(){
-        return new OpenFoodFactsWebClientProperties("https://world.openfoodfacts.org","https://prices.openfoodfacts.org"
-                ,"/api/v2/search",
-                "/api/v2/product","/api/v3/prices","/cgi/product_image_upload.pl", Optional.of("abc"),Optional.of("abc"));
+        return new OpenFoodFactsWebClientProperties(
+                "https://world.openfoodfacts.org",
+                "https://prices.openfoodfacts.org",
+                "/api/v2/search",
+                "/api/v2/product","/api/v3/prices",
+                "/cgi/product_image_upload.pl",
+                "cgi/product_jqm2.pl",
+                Optional.of("abc"),Optional.of("abc"));
     }
     public static OpenFoodFactsWebClientProperties nullWebClientProperties(){
         return new OpenFoodFactsWebClientProperties(null,null,
-                null,null,null,null,null,null);
+                null,null,null,null,
+                null,null,null);
     }
 
 
@@ -98,6 +106,35 @@ public class TestData {
                 .language(Language.TURKISH)
                 .facet("back")
                 .productCode(sampleProductCode)
+                .build();
+    }
+
+    public static ProductSaveRequest validProductSaveRequest(){
+        return ProductSaveRequest.builder()
+                .code(fakeProductCode)
+                .brands("fakebrand")
+                .productName("fakeproduct")
+                .ingredientsText("fake ingredients")
+                .comment("fake comment")
+                .build();
+    }
+
+    public static ProductSaveRequest invalidNullCodeProductSaveRequest(){
+        return ProductSaveRequest.builder()
+                .brands("fakebrand")
+                .productName("fakeproduct")
+                .ingredientsText("fake ingredients")
+                .comment("fake comment")
+                .build();
+    }
+
+    public static ProductSaveRequest invalidNonNumericCodeProductSaveRequest(){
+        return ProductSaveRequest.builder()
+                .code("ABCDEFG")
+                .brands("fakebrand")
+                .productName("fakeproduct")
+                .ingredientsText("fake ingredients")
+                .comment("fake comment")
                 .build();
     }
 

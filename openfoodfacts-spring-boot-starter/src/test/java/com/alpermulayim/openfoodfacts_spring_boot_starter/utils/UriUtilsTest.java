@@ -36,7 +36,8 @@ public class UriUtilsTest {
                     "openfoodfacts.prices-base-url=https://prices.openfoodfacts.org",
                     "openfoodfacts.search-path=/api/v2/search",
                     "openfoodfacts.product-path=/api/v2/product",
-                    "openfoodfacts.prices-path=/api/v3/prices"
+                    "openfoodfacts.prices-path=/api/v3/prices",
+                    "openfoodfacts.product-path-save=/cgi/product_jqm2.pl"
             );
 
 

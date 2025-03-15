@@ -22,6 +22,8 @@ public record OpenFoodFactsWebClientProperties (
         String pricePath,
         @DefaultValue("/cgi/product_image_upload.pl")
         String productImagePath,
+        @DefaultValue("/cgi/product_jqm2.pl")
+        String productPathSave,
         Optional<String> username,
         Optional<String> password
 ){}

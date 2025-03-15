@@ -142,4 +142,18 @@ public class OpenFoodFactsWebClientTest {
         });
     }
 
+    @Test
+    void whenWebClientCalledForSaveProductWithNullRequestWillThrowException(){
+        contextRunner.run(context -> {
+            assertThrows(OpenFoodFactsException.class,()->webClient.saveProduct(null));
+        });
+    }
+
+    @Test
+    void whenWebClientCalledForSaveProductWithInvalidRequestCodeWillThrowException(){
+        contextRunner.run(context -> {
+            assertThrows(OpenFoodFactsException.class,()->webClient.saveProduct(TestData.invalidNonNumericCodeProductSaveRequest()));
+        });
+    }
+
 }

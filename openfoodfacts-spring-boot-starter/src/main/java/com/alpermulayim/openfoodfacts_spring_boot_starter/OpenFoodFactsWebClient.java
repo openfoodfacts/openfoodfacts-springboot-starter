@@ -3,14 +3,17 @@ package com.alpermulayim.openfoodfacts_spring_boot_starter;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.ProductSaveResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceFactsResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.AuthUtils;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.MultiPartUtils;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -36,6 +39,7 @@ public class OpenFoodFactsWebClient {
     private OpenFoodFactsWebClientProperties clientProperties;
     private WebClient webClient;
     private AuthUtils authUtils;
+    private MultiPartUtils multiPartFormUtils;
 
     @Autowired
     public OpenFoodFactsWebClient(OpenFoodFactsWebClientProperties clientProperties) {
@@ -45,6 +49,7 @@ public class OpenFoodFactsWebClient {
         pricesRestClient = RestClient.create(clientProperties.pricesBaseUrl());
         webClient = WebClient.create(clientProperties.baseUrl());
         authUtils = new AuthUtils(clientProperties);
+        multiPartFormUtils = new MultiPartUtils();
 
         //TODO: add init properties print for caller developers
         System.out.println("OpenFoodFactsWebClient initialized with "+ clientProperties);
@@ -116,7 +121,6 @@ public class OpenFoodFactsWebClient {
 
     public String uploadProductImage(ProductImageUploadRequest request) throws OpenFoodFactsException{
 
-
         String imageField = request.facet() + "_" + request.language().code();
         String imageUploadFieldKey ="imgupload_"+ request.facet() +"_"+ request.language().code();
 
@@ -134,5 +138,20 @@ public class OpenFoodFactsWebClient {
                 .toEntity(String.class).block().getBody();
     }
 
+    public ProductSaveResponse saveProduct(ProductSaveRequest request) throws OpenFoodFactsException{
+        if(request == null){
+            throw new OpenFoodFactsException("Product Save Request cannot be null");
+        }
+        if(request.code() == null){
+            throw new OpenFoodFactsException("ProductCode Save Request cannot be null");
+        }
+
+        return  restClient.post()
+                .uri(clientProperties.productPathSave())
+                .headers(httpHeaders -> httpHeaders.addAll(authUtils.getAuthHeaders()))
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(multiPartFormUtils.getProductSaveMultiPartFormBody(request))
+                .retrieve().body(ProductSaveResponse.class);
+    }
 
 }
