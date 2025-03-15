@@ -81,6 +81,8 @@ openfoodfacts:
   search-path: "/api/v2/search"
   product-path: "/api/v2/product"
   prices-path:"/api/v1/prices"
+  username: "${OPEN_FOOD_FACTS_USERNAME}"
+  password: "${OPEN_FOOD_FACTS_PASSWORD}"
   
 ```
 ## **Ready to use 🎉**
