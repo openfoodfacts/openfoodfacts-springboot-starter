@@ -7,8 +7,10 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.ProductSaveResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceFactsResponse;
 import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoPrice;
 import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoProduct;
@@ -149,5 +151,21 @@ public class DemoOpenFoodFactsService {
 
         return  webClient.uploadProductImage(request);
     }
+
+    public ProductSaveResponse saveProduct(ProductSaveRequest request){
+        return webClient.saveProduct(request);
+    }
+
+    public ProductSaveResponse saveProductCustom(){
+         ProductSaveRequest request = ProductSaveRequest.builder()
+                    .code("484848484")
+                    .brands("fakebrand-test")
+                    .productName("fakeproduct-test")
+                    .ingredientsText("fake,ingredients,test1,test2,test3")
+                    .comment("fake,comment")
+                    .build();
+         return webClient.saveProduct(request);
+    }
+
 }
 

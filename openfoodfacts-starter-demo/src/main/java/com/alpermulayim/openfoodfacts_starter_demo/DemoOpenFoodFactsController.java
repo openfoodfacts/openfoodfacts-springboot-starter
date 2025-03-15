@@ -3,8 +3,10 @@ package com.alpermulayim.openfoodfacts_starter_demo;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.ProductSaveResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceFactsResponse;
 import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoPrice;
 import com.alpermulayim.openfoodfacts_starter_demo.dtos.DemoProduct;
@@ -75,5 +77,15 @@ public class DemoOpenFoodFactsController {
     @PostMapping("image")
     String uploadProductImage( @RequestParam("code") String code,@RequestParam("lang") String lang, @RequestParam("facet")  String facet, @RequestParam("file") MultipartFile file) throws IOException {
         return service.uploadProductImage(code,lang,facet,file);
+    }
+
+    @PostMapping("save")
+    ProductSaveResponse saveProduct(@RequestBody ProductSaveRequest request){
+        return service.saveProduct(request);
+    }
+
+    @PostMapping("save/custom")
+    ProductSaveResponse saveProductCustom(){
+        return service.saveProductCustom();
     }
 }
