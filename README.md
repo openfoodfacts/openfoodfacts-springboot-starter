@@ -4,7 +4,7 @@
 |----------|----------|
 | [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github%20Pages&logoColor=white)](https://alpermulayim.github.io/openfoodfacts-spring-boot-starter/) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alpermulayim/) |
 
-**openfoodfacts-spring-boot-starter** Maven package designed to **simplify the integration of OpenFoodFacts REST APIs into Spring Boot** applications. Developers can easily connect to the OpenFoodFacts API without the need to implement any complex RESTful calls.
+**openfoodfacts-spring-boot-starter** Maven package designed to **simplify the integration of OpenFoodFacts REST APIs into Spring Boot** applications. Developers can easily connect to the OpenFoodFacts API without implement any complex RESTful calls.
 
  ### Framework
  ![image](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
