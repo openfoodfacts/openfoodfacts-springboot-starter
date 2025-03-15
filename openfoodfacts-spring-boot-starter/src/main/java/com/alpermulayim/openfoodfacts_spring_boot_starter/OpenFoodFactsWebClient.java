@@ -10,6 +10,7 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceFactsResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.AuthUtils;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +35,7 @@ public class OpenFoodFactsWebClient {
     private UriUtils uriUtils;
     private OpenFoodFactsWebClientProperties clientProperties;
     private WebClient webClient;
+    private AuthUtils authUtils;
 
     @Autowired
     public OpenFoodFactsWebClient(OpenFoodFactsWebClientProperties clientProperties) {
@@ -42,6 +44,7 @@ public class OpenFoodFactsWebClient {
         restClient = RestClient.create(clientProperties.baseUrl());
         pricesRestClient = RestClient.create(clientProperties.pricesBaseUrl());
         webClient = WebClient.create(clientProperties.baseUrl());
+        authUtils = new AuthUtils(clientProperties);
 
         //TODO: add init properties print for caller developers
         System.out.println("OpenFoodFactsWebClient initialized with "+ clientProperties);
@@ -113,25 +116,9 @@ public class OpenFoodFactsWebClient {
 
     public String uploadProductImage(ProductImageUploadRequest request) throws OpenFoodFactsException{
 
-        if(clientProperties.username() == null && clientProperties.password() == null){
-            throw  new OpenFoodFactsException("Client Username or Password is Invalid, cannot run image upload");
-        }
 
-        String username = clientProperties.username().orElseThrow(() ->
-                new OpenFoodFactsException("Client Username or Password is Invalid, cannot run image upload"));
-
-        String password = clientProperties.password().orElseThrow(()->
-                new OpenFoodFactsException("Client Username or Password is Invalid cannot run image upload"));
-
-        String auth = username + ":" + password;
-        String authorization = java.util.Base64.getEncoder().encodeToString(auth.getBytes());
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Basic " + authorization);
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-        String imageField = request.facet() + "_" + request.language();
-        String imageUploadFieldKey ="imgupload_"+ request.facet() +"_"+ request.language();
+        String imageField = request.facet() + "_" + request.language().code();
+        String imageUploadFieldKey ="imgupload_"+ request.facet() +"_"+ request.language().code();
 
         MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
         multipartBodyBuilder.part("code", request.productCode());
@@ -140,7 +127,7 @@ public class OpenFoodFactsWebClient {
 
         return webClient.post()
                 .uri(clientProperties.productImagePath())
-                .headers(httpHeaders -> httpHeaders.addAll(headers))
+                .headers(httpHeaders -> httpHeaders.addAll(authUtils.getAuthHeaders()))
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .bodyValue(multipartBodyBuilder.build())
                 .retrieve()

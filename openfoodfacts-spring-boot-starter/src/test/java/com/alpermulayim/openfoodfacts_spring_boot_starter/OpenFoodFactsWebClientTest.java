@@ -136,7 +136,7 @@ public class OpenFoodFactsWebClientTest {
     }
 
     @Test
-    void whenWebClientCalledForProductPriceWithNullRequestWillThrowsExceptio2(){
+    void whenWebClientCalledForProductPriceWithNoAuthWillThrowsExceptio2(){
         contextRunner.run(context -> {
             assertThrows(OpenFoodFactsException.class,()->webClient.uploadProductImage(TestData.validImageRequest()));
         });
