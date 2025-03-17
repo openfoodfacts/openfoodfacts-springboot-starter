@@ -8,6 +8,8 @@
 
  ### Framework
  ![image](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+ ![image](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+
  
  **OpenFoodFactsWebClient**  current version provides different methods for product and search. 
 
