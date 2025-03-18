@@ -8,7 +8,8 @@ public record ProductImageUploadRequest(
         String productCode,
         @JsonIgnore
         MultipartFile file,
-        String facet,
+        ImageFormat imageFormat,
+        ImageFacet facet,
         Language language
 ) {
     public static Builder builder() {
@@ -17,9 +18,10 @@ public record ProductImageUploadRequest(
 
     public static class Builder {
         private MultipartFile file;
-        private String facet;
+        private ImageFacet facet;
         private Language language;
         private String productCode;
+        private ImageFormat imageFormat;
 
 
         public Builder productCode(String productCode) {
@@ -32,8 +34,13 @@ public record ProductImageUploadRequest(
             return this;
         }
 
-        public Builder facet(String facet) {
+        public Builder facet(ImageFacet facet) {
             this.facet = facet;
+            return this;
+        }
+
+        public Builder format(ImageFormat format) {
+            this.imageFormat = format;
             return this;
         }
 
@@ -43,7 +50,7 @@ public record ProductImageUploadRequest(
         }
 
         public ProductImageUploadRequest build() {
-            return new ProductImageUploadRequest(productCode,file, facet, language);
+            return new ProductImageUploadRequest(productCode,file, imageFormat,facet, language);
         }
     }
 }

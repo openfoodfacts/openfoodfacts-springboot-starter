@@ -1,6 +1,8 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter.utils;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ImageFacet;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ImageFormat;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.testdata.TestData;
@@ -79,5 +81,25 @@ class MultiPartUtilsTest {
         assertTrue(keys.contains("code"));
         assertTrue(keys.contains("imagefield"));
         assertTrue(keys.contains(imgKey));
+    }
+
+    @Test
+    public void whenImageFormatConvertedInvalidStringEnumThrowsIllegalArgumentException(){
+        assertThrows(IllegalArgumentException.class,()-> ImageFormat.from("test"));
+    }
+
+    @Test
+    public void whenImageFacetInvalidStringEnumThrowsIllegalArgumentException(){
+        assertThrows(IllegalArgumentException.class,()-> ImageFacet.from("test"));
+    }
+
+    @Test
+    public void whenImageFacetValidStringEnumWillValid(){
+        assertEquals(ImageFacet.INGREDIENTS,ImageFacet.from("ingredients"));
+    }
+
+    @Test
+    public void whenImageFormatValidStringEnumWillValid(){
+        assertEquals(ImageFormat.PNG,ImageFormat.from("png"));
     }
 }
