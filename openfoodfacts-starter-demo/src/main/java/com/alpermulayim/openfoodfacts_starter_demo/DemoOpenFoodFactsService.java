@@ -1,5 +1,6 @@
 package com.alpermulayim.openfoodfacts_starter_demo;
 
+import com.alpermulayim.openfoodfacts_spring_boot_starter.OpenFoodFactsApi;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.OpenFoodFactsWebClient;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.openprices.ProductPrice;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.lang.Language;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 @Service
 public class DemoOpenFoodFactsService {
     @Autowired
-    OpenFoodFactsWebClient webClient;
+    OpenFoodFactsApi webClient;
 
     public OpenFoodFactsResponse request(){
 

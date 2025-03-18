@@ -1,5 +1,6 @@
 package com.alpermulayim.openfoodfacts_starter_demo;
 
+import com.alpermulayim.openfoodfacts_spring_boot_starter.OpenFoodFactsApi;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.OpenFoodFactsWebClient;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientConfiguration;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
@@ -20,9 +21,8 @@ public class DemoConfig {
         this.properties = properties;
     }
 
-
     @Bean
-    OpenFoodFactsWebClient openFoodFactsWebClient(){
+    OpenFoodFactsApi openFoodFactsWebClient(){
         return new OpenFoodFactsWebClient(properties);
     }
 }
