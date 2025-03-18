@@ -4,6 +4,8 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWe
 import com.alpermulayim.openfoodfacts_spring_boot_starter.lang.Language;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ImageFacet;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ImageFormat;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
@@ -103,7 +105,8 @@ public class TestData {
         return ProductImageUploadRequest.builder()
                 .file(mockMultipartFile)
                 .language(Language.TURKISH)
-                .facet("back")
+                .facet(ImageFacet.FRONT)
+                .format(ImageFormat.PNG)
                 .productCode(sampleProductCode)
                 .build();
     }

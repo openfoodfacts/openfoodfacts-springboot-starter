@@ -39,6 +39,7 @@ public class MultiPartUtils {
     }
 
     public MultiValueMap<String,HttpEntity<?>> getImageUploadMultiPartFormBody(ProductImageUploadRequest request){
+
         String imageField = request.facet() + "_" + request.language().code();
         String imageUploadFieldKey ="imgupload_"+ request.facet() +"_"+ request.language().code();
 

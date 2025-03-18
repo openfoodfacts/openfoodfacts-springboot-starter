@@ -6,6 +6,7 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.openprices.Produc
 import com.alpermulayim.openfoodfacts_spring_boot_starter.lang.Language;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ImageFacet;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
@@ -147,7 +148,7 @@ public class DemoOpenFoodFactsService {
                 .productCode(code)
                 .language(Language.fromCode(lang))
                 .file(file)
-                .facet(facet)
+                .facet(ImageFacet.from(facet))
                 .build();
 
         return  webClient.uploadProductImageBlocked(request);

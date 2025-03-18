@@ -22,16 +22,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
+ * OpenFoodFactsWebClient designed to simplify the integration of OpenFoodFacts REST APIs into Spring Boot applications.
+ * Developers can easily connect to the OpenFoodFacts API without implement any complex RESTFul calls.
  * @author Alper Mulayim  https://github.com/AlperMulayim
  */
-
 @Service("openFoodFactsWebClient")
 public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
     private RestClient restClient;
@@ -42,6 +42,11 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
     private AuthUtils authUtils;
     private MultiPartUtils multiPartFormUtils;
 
+    /**
+     * Constructor for OpenFoodFactsWebClient.{@link OpenFoodFactsWebClientProperties}.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param clientProperties Configuration properties for the API.
+     */
     @Autowired
     public OpenFoodFactsWebClient(OpenFoodFactsWebClientProperties clientProperties) {
         this.clientProperties = clientProperties;
@@ -56,6 +61,14 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
         System.out.println("OpenFoodFactsWebClient initialized with "+ clientProperties);
     }
 
+    /**
+     * Retrieve Product with setted fields.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param productCode product code
+     * @param fields the retrieved fields list  on response object.{@link ProductField}.
+     * @return The product details wrapped in an {@link OpenFoodFactsResponse}.
+     * @throws OpenFoodFactsException if the product code is null or empty.
+     */
     public OpenFoodFactsResponse getProduct(String productCode,List<ProductField> fields){
         if(productCode == null || productCode.isEmpty() ){
             throw new OpenFoodFactsException("Product  Number cannot be null for product request");
@@ -67,6 +80,13 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
                 .body(OpenFoodFactsResponse.class);
     }
 
+
+    /**
+     * Retrieves product details.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param productCode product code
+     * @return The product details wrapped in an {@link OpenFoodFactsResponse}.
+     */
     public OpenFoodFactsResponse getProduct(String productCode){
         return restClient.get()
                 .uri(uriUtils.productsUri(productCode))
@@ -74,6 +94,13 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
                 .body(OpenFoodFactsResponse.class);
     }
 
+    /**
+     * Retrieves product details using a {@link ProductRequest}.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param request The request object containing productCode and fields.
+     * @return The product details wrapped in an {@link OpenFoodFactsResponse}.
+     * @throws OpenFoodFactsException if request or required fields are null.
+     */
     public OpenFoodFactsResponse getProduct(ProductRequest request){
         if(request == null){
             throw new OpenFoodFactsException(" ProductRequest could not be null");
@@ -88,6 +115,13 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
                 .body(OpenFoodFactsResponse.class);
     }
 
+    /**
+     * Searches for products based on a {@link ProductSearchRequest}.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param request The search request containing query parameters.
+     * @return The paginated response wrapped in an {@link OpenFoodFactsPageResponse}.
+     * @throws OpenFoodFactsException if request is null.
+     */
     public OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) throws InvocationTargetException, IllegalAccessException ,OpenFoodFactsException{
 
         if(request == null){
@@ -99,6 +133,13 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
                 .body(OpenFoodFactsPageResponse.class);
     }
 
+    /**
+     * Finds price details for a product.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param productCode product code
+     * @return The price details wrapped in an {@link OpenPriceFactsResponse}.
+     * @throws OpenFoodFactsException if the product code is null or empty.
+     */
     public OpenPriceFactsResponse findPrice(String productCode)  throws  OpenFoodFactsException{
         if(productCode == null ||productCode.isEmpty() ){
             throw new OpenFoodFactsException("Product code is null or empty");
@@ -109,6 +150,13 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
                 .body(OpenPriceFactsResponse.class);
     }
 
+    /**
+     * Searches for product prices based on a {@link PriceRequest}.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param priceRequest product code
+     * @return The price details wrapped in an {@link OpenPriceFactsResponse}.
+     * @throws OpenFoodFactsException if the product code is null or empty.
+     */
     public OpenPriceFactsResponse findPrice(PriceRequest priceRequest) throws OpenFoodFactsException{
         if(priceRequest == null ){
             throw new OpenFoodFactsException("PriceRequest is null");
@@ -119,15 +167,21 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
                 .body(OpenPriceFactsResponse.class);
     }
 
+    /**
+     * Uploads a product image asynchronously.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param request The image upload {@link ProductImageUploadRequest}. request containing image data.
+     * @return A {@link Mono} with the server response.
+     */
     public Mono<ResponseEntity<String>> uploadProductImage(ProductImageUploadRequest request){
         return  uploadProductImageUnblocked(request);
     }
 
     /**
      * Uploads a product image asynchronously.
-     *
-     * @param request The product image upload request.
-     * @return A reactive {@link Mono<ResponseEntity<String>> } representing the result of the upload.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param request The image upload {@link ProductImageUploadRequest}.  request containing image data.
+     * @return A {@link Mono} with the server response.
      */
     public Mono<ResponseEntity<String>> uploadProductImageUnblocked(ProductImageUploadRequest request) throws OpenFoodFactsException{
 
@@ -140,6 +194,12 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
                 .toEntity(String.class);
     }
 
+    /**
+     * Uploads a product image synchronously.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param request The image upload request containing image data. {@link ProductImageUploadRequest}.
+     * @return server response.
+     */
     public String uploadProductImageBlocked(ProductImageUploadRequest request) throws OpenFoodFactsException{
 
         return webClient.post()
@@ -151,6 +211,13 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
                 .toEntity(String.class).block().getBody();
     }
 
+    /**
+     * Saves new product or updates product information.
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param request The product save new product or update product request. {@link ProductSaveRequest}.
+     * @return The saved product response wrapped in a {@link ProductSaveResponse}.
+     * @throws OpenFoodFactsException if request is null or missing required fields.
+     */
     public ProductSaveResponse saveProduct(ProductSaveRequest request) throws OpenFoodFactsException{
         if(request == null){
             throw new OpenFoodFactsException("Product Save Request cannot be null");
