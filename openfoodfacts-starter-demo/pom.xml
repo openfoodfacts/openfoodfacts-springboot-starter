@@ -51,7 +51,7 @@
 		<dependency>
 			<groupId>com.alpermulayim</groupId>
 			<artifactId>openfoodfacts-spring-boot-starter</artifactId>
-			<version>0.0.2.4</version>
+			<version>0.0.2.6</version>
 		</dependency>
 
 		<dependency>

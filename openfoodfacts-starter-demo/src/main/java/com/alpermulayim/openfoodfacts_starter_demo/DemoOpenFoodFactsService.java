@@ -149,7 +149,7 @@ public class DemoOpenFoodFactsService {
                 .facet(facet)
                 .build();
 
-        return  webClient.uploadProductImage(request);
+        return  webClient.uploadProductImageBlocked(request);
     }
 
     public ProductSaveResponse saveProduct(ProductSaveRequest request){
