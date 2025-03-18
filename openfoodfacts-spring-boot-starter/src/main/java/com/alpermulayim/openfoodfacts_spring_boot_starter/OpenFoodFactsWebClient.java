@@ -16,9 +16,7 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.AuthUtils;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.MultiPartUtils;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 

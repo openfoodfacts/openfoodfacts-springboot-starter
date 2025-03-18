@@ -7,7 +7,6 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductReques
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
-import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.ProductSaveResponse;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.ArrayList;

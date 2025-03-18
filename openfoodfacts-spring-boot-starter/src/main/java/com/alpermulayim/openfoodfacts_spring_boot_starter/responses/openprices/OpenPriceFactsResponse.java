@@ -1,6 +1,5 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices;
 
-import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.openprices.OpenPricesProduct;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.openprices.ProductPrice;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

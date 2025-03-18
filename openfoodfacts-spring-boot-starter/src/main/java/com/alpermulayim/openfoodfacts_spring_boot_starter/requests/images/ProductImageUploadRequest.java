@@ -1,6 +1,5 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images;
 
-import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.Product;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.lang.Language;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;

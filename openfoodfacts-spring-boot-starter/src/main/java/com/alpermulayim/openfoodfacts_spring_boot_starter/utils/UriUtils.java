@@ -28,14 +28,12 @@ public class UriUtils {
     private String productsPath;
     private String searchPath;
     private String pricePath;
-    private String productImgPath;
 
     @Autowired
     public UriUtils(OpenFoodFactsWebClientProperties properties) {
         productsPath = properties.productPath();
         searchPath = properties.searchPath();
         pricePath = properties.pricePath();
-        productImgPath = properties.productImagePath();
     }
 
     public String productsUri(String productCode, List<ProductField> fields, Optional<Language> lang){
