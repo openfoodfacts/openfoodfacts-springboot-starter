@@ -121,19 +121,11 @@ public class OpenFoodFactsWebClient {
 
     public String uploadProductImage(ProductImageUploadRequest request) throws OpenFoodFactsException{
 
-        String imageField = request.facet() + "_" + request.language().code();
-        String imageUploadFieldKey ="imgupload_"+ request.facet() +"_"+ request.language().code();
-
-        MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
-        multipartBodyBuilder.part("code", request.productCode());
-        multipartBodyBuilder.part("imagefield", imageField);
-        multipartBodyBuilder.part(imageUploadFieldKey, request.file().getResource());
-
         return webClient.post()
                 .uri(clientProperties.productImagePath())
                 .headers(httpHeaders -> httpHeaders.addAll(authUtils.getAuthHeaders()))
                 .contentType(MediaType.MULTIPART_FORM_DATA)
-                .bodyValue(multipartBodyBuilder.build())
+                .bodyValue(multiPartFormUtils.getImageUploadMultiPartFormBody(request))
                 .retrieve()
                 .toEntity(String.class).block().getBody();
     }

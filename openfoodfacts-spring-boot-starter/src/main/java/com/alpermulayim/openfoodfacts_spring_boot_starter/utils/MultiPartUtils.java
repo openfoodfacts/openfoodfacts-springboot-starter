@@ -1,6 +1,7 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter.utils;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.http.HttpEntity;
@@ -34,6 +35,18 @@ public class MultiPartUtils {
                 throw new OpenFoodFactsException("ProductSaveRequest are not able to parsed");
             }
         }
+        return multipartBodyBuilder.build();
+    }
+
+    public MultiValueMap<String,HttpEntity<?>> getImageUploadMultiPartFormBody(ProductImageUploadRequest request){
+        String imageField = request.facet() + "_" + request.language().code();
+        String imageUploadFieldKey ="imgupload_"+ request.facet() +"_"+ request.language().code();
+
+        MultipartBodyBuilder multipartBodyBuilder = new MultipartBodyBuilder();
+        multipartBodyBuilder.part("code", request.productCode());
+        multipartBodyBuilder.part("imagefield", imageField);
+        multipartBodyBuilder.part(imageUploadFieldKey, request.file().getResource());
+
         return multipartBodyBuilder.build();
     }
 
