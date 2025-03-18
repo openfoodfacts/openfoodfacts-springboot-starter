@@ -12,8 +12,11 @@
 	<artifactId>openfoodfacts-starter-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>openfoodfacts-starter-demo</name>
-	<description>Demo project for open-food-facts-springboot-starter webclient dependency </description>
-	<url/>
+	<description>DEMO for openfoodfacts-spring-boot-starter maven package SDK designed to simplify the
+		integration of OpenFoodFacts REST APIs into Spring Boot applications. Developers can easily
+		connect to the OpenFoodFacts API without implement any complex RESTFul calls.</description>
+	<url>https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>
+
 	<licenses>
 		<license/>
 	</licenses>
@@ -59,15 +62,20 @@
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
-
 	</dependencies>
 
-<!--	<repositories>-->
-<!--		<repository>-->
-<!--			<id>github</id>-->
-<!--			<url>https://maven.pkg.github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>-->
-<!--		</repository>-->
-<!--	</repositories>-->
+	<profiles>
+		<profile>
+			<id> remote </id>
+			<repositories>
+				<repository>
+					<id>github</id>
+					<url>https://maven.pkg.github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
 
 	<build>
 		<plugins>
