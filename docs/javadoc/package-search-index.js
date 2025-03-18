@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.alpermulayim.openfoodfacts_starter_demo"},{"l":"com.alpermulayim.openfoodfacts_starter_demo.dtos"}];updateSearchResults();
