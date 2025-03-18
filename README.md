@@ -49,7 +49,7 @@ Mono<ResponseEntity<String>> uploadProductImageUnblocked(ProductImageUploadReque
 <dependency>
   <groupId>com.alpermulayim</groupId>
   <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-  <version>0.0.2.7</version>
+  <version>0.0.2.8</version>
 </dependency>
 ```
 
