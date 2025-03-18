@@ -14,14 +14,18 @@
  **OpenFoodFactsWebClient**  current version provides different methods for product and search. 
 
 ```java
+
 OpenFoodFactsResponse getProduct(String productCode, List<ProductField> fields);
 OpenFoodFactsResponse getProduct(String productCode);
 OpenFoodFactsResponse getProduct(ProductRequest request);
-OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request);
+OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) throws InvocationTargetException, IllegalAccessException , OpenFoodFactsException;
 OpenPriceFactsResponse findPrice(PriceRequest priceRequest);
 OpenPriceFactsResponse findPrice(String productCode);
 ProductSaveResponse saveProduct(ProductSaveRequest request);
-String uploadProductImage(ProductImageUploadRequest request);
+Mono<ResponseEntity<String>> uploadProductImage(ProductImageUploadRequest request);
+String uploadProductImageBlocked(ProductImageUploadRequest request) throws OpenFoodFactsException;
+Mono<ResponseEntity<String>> uploadProductImageUnblocked(ProductImageUploadRequest request) throws OpenFoodFactsException;
+
 ```
 
 ## How to use
@@ -45,7 +49,7 @@ String uploadProductImage(ProductImageUploadRequest request);
 <dependency>
   <groupId>com.alpermulayim</groupId>
   <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-  <version>0.0.2.5</version>
+  <version>0.0.2.7</version>
 </dependency>
 ```
 
@@ -69,7 +73,7 @@ public class DemoConfig {
     }
 
     @Bean
-    OpenFoodFactsWebClient openFoodFactsWebClient(){
+    OpenFoodFactsApi openFoodFactsWebClient(){
         return new OpenFoodFactsWebClient(properties);
     }
 }
@@ -98,10 +102,10 @@ Demo Application README: [Demo Application Readme](https://github.com/AlperMulay
 @Service
 public class DemoOpenFoodFactsService {
     @Autowired
-    OpenFoodFactsWebClient webClient;
+    OpenFoodFactsApi webClient;
 
     public OpenFoodFactsResponse request(){
-			//we are able to create selected fields via ProductField. 
+	//we are able to create selected fields via ProductField. 
        List<ProductField> fields = new ArrayList<>();
         fields.add(ProductField.PRODUCT_NAME);
         fields.add(ProductField.CODE);
