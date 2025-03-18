@@ -17,10 +17,13 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.MultiPartUtils;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -116,8 +119,22 @@ public class OpenFoodFactsWebClient {
                 .body(OpenPriceFactsResponse.class);
     }
 
+    public Mono<ResponseEntity<String>> uploadProductImage(ProductImageUploadRequest request){
+        return  uploadProductImageUnblocked(request);
+    }
 
-    public String uploadProductImage(ProductImageUploadRequest request) throws OpenFoodFactsException{
+    public Mono<ResponseEntity<String>> uploadProductImageUnblocked(ProductImageUploadRequest request) throws OpenFoodFactsException{
+
+        return webClient.post()
+                .uri(clientProperties.productImagePath())
+                .headers(httpHeaders -> httpHeaders.addAll(authUtils.getAuthHeaders()))
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .bodyValue(multiPartFormUtils.getImageUploadMultiPartFormBody(request))
+                .retrieve()
+                .toEntity(String.class);
+    }
+
+    public String uploadProductImageBlocked(ProductImageUploadRequest request) throws OpenFoodFactsException{
 
         return webClient.post()
                 .uri(clientProperties.productImagePath())
