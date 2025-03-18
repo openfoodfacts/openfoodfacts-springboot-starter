@@ -33,7 +33,7 @@ import java.util.List;
  */
 
 @Service("openFoodFactsWebClient")
-public class OpenFoodFactsWebClient {
+public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
     private RestClient restClient;
     private RestClient pricesRestClient;
     private UriUtils uriUtils;

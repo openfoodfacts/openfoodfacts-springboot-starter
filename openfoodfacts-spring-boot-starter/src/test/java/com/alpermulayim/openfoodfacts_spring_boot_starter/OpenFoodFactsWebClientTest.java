@@ -7,6 +7,8 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.testdata.TestData;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.autoconfigure.web.client.RestClientAutoConfiguration;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
@@ -35,7 +37,7 @@ public class OpenFoodFactsWebClientTest {
     @BeforeEach
     void init(){
         contextRunner.run(context->{
-            webClient = context.getBean(OpenFoodFactsWebClient.class);
+            webClient = context.getBean("openFoodFactsWebClient",OpenFoodFactsWebClient.class);
         });
     }
 
