@@ -123,6 +123,12 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
         return  uploadProductImageUnblocked(request);
     }
 
+    /**
+     * Uploads a product image asynchronously.
+     *
+     * @param request The product image upload request.
+     * @return A reactive {@link Mono<ResponseEntity<String>> } representing the result of the upload.
+     */
     public Mono<ResponseEntity<String>> uploadProductImageUnblocked(ProductImageUploadRequest request) throws OpenFoodFactsException{
 
         return webClient.post()
