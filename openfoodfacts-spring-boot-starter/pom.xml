@@ -13,10 +13,12 @@
 
     <groupId>com.alpermulayim</groupId>
     <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-    <version>0.0.2.5</version>
+    <version>0.0.2.6</version>
     <name>openfoodfacts-spring-boot-starter</name>
-    <description>OpenFoodFacts and OpenPricesFacts REST API Client Spring Boot Starter</description>
-    <url/>
+    <description>openfoodfacts-spring-boot-starter maven package SDK designed to simplify the
+        integration of OpenFoodFacts REST APIs into Spring Boot applications. Developers can easily
+        connect to the OpenFoodFacts API without implement any complex RESTFul calls.</description>
+    <url>https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>
 
     <licenses>
         <license/>
@@ -39,7 +41,6 @@
     <properties>
         <java.version>17</java.version>
     </properties>
-
 
     <repositories>
         <repository>
@@ -65,8 +66,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
-
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
