@@ -6,6 +6,7 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.lang.Language;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceLocationRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +120,31 @@ public class UriUtils {
 
             } catch (Exception e) {
                 throw new OpenFoodFactsException("[OpenFoodFactsSpringBootStarter] Price request could not parsed.");
+            }
+        }
+        return uriBuilder.build().toUriString();
+    }
+
+
+    public String findPriceLocationUri(PriceLocationRequest priceLocationRequest) throws OpenFoodFactsException{
+
+        if(priceLocationRequest == null){
+            throw new OpenFoodFactsException("PriceLocationRequest cannot be null");
+        }
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromPath(pricePath);
+        List<RecordComponent> recordComponents = List.of(priceLocationRequest.getClass().getRecordComponents());
+
+        for(RecordComponent component :recordComponents){
+            try {
+                Object value = component.getAccessor().invoke(priceLocationRequest);
+                JsonProperty jsonProperty = component.getAccessor().getAnnotation(JsonProperty.class);
+
+                if(value != null){
+                    uriBuilder.queryParam(jsonProperty.value(),value);
+                }
+
+            } catch (Exception e) {
+                throw new OpenFoodFactsException("[OpenFoodFactsSpringBootStarter] PriceLocation request could not parsed.");
             }
         }
         return uriBuilder.build().toUriString();

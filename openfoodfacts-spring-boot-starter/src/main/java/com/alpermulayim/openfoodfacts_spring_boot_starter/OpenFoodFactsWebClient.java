@@ -2,6 +2,7 @@ package com.alpermulayim.openfoodfacts_spring_boot_starter;
 
 import com.alpermulayim.openfoodfacts_spring_boot_starter.config.OpenFoodFactsWebClientProperties;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceLocationRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
@@ -12,6 +13,7 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductReques
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.ProductSaveResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceFactsResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceLocationsPagedResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.AuthUtils;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.MultiPartUtils;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.utils.UriUtils;
@@ -232,6 +234,19 @@ public class OpenFoodFactsWebClient implements OpenFoodFactsApi{
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(multiPartFormUtils.getProductSaveMultiPartFormBody(request))
                 .retrieve().body(ProductSaveResponse.class);
+    }
+
+    @Override
+    public OpenPriceLocationsPagedResponse findPriceLocation(PriceLocationRequest locationRequest) {
+
+        if(locationRequest == null){
+            throw new OpenFoodFactsException("PriceLocationRequest cannot be null");
+        }
+
+        return restClient.get()
+                .uri(uriUtils.findPriceLocationUri(locationRequest))
+                .retrieve()
+                .body(OpenPriceLocationsPagedResponse.class);
     }
 
 }

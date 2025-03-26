@@ -176,4 +176,15 @@ public class UriUtilsTest {
         assertTrue(url.contains("lc="+TestData.langEnglish.code()));
     }
 
+    @Test
+    void whenPriceLocationRequestUriWithNullRequestThrowException(){
+        assertThrows(OpenFoodFactsException.class,()->uriUtils.findPriceLocationUri(null));
+    }
+
+    @Test
+    void whenPriceLocationRequestUriWithValidRequestWillHaveRequestedDataFields(){
+        String url = uriUtils.findPriceLocationUri(TestData.validPriceLocationRequest());
+        assertTrue(url.contains(TestData.validPriceLocationRequest().osmAddressCityLike()));
+    }
+
 }
