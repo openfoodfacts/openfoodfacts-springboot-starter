@@ -21,6 +21,7 @@ OpenFoodFactsResponse getProduct(ProductRequest request);
 OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) throws InvocationTargetException, IllegalAccessException , OpenFoodFactsException;
 OpenPriceFactsResponse findPrice(PriceRequest priceRequest);
 OpenPriceFactsResponse findPrice(String productCode);
+OpenPriceLocationsPagedResponse findPriceLocation(PriceLocationRequest locationRequest);
 ProductSaveResponse saveProduct(ProductSaveRequest request);
 Mono<ResponseEntity<String>> uploadProductImage(ProductImageUploadRequest request);
 String uploadProductImageBlocked(ProductImageUploadRequest request) throws OpenFoodFactsException;
