@@ -46,14 +46,14 @@
     <repositories>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>
+            <url>https://maven.pkg.github.com/openfoodfactsgi/openfoodfacts-spring-boot-starter</url>
         </repository>
     </repositories>
 
     <distributionManagement>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>
+            <url>https://maven.pkg.github.com/openfoodfacts/openfoodfacts-spring-boot-starter</url>
         </repository>
     </distributionManagement>
 
