@@ -13,7 +13,7 @@
 
     <groupId>org.openfoodfacts</groupId>
     <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-    <version>v0.0.1</version>
+    <version>0.0.1</version>
     <name>openfoodfacts-spring-boot-starter</name>
     <description>openfoodfacts-spring-boot-starter maven package SDK designed to simplify the
         integration of OpenFoodFacts REST APIs into Spring Boot applications. Developers can easily
