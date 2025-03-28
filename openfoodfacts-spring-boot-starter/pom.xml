@@ -11,14 +11,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.alpermulayim</groupId>
+    <groupId>org.openfoodfacts</groupId>
     <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-    <version>0.0.2.10</version>
+    <version>v0.0.1</version>
     <name>openfoodfacts-spring-boot-starter</name>
     <description>openfoodfacts-spring-boot-starter maven package SDK designed to simplify the
         integration of OpenFoodFacts REST APIs into Spring Boot applications. Developers can easily
         connect to the OpenFoodFacts API without implement any complex RESTFul calls.</description>
-    <url>https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter</url>
+    <url>https://github.com/openfoodfacts/openfoodfacts-springboot-starter</url>
 
     <licenses>
         <license/>
@@ -28,6 +28,7 @@
         <developer>
             <name>Alper Mulayim</name>
             <url>https://github.com/AlperMulayim</url>
+            <organization>OpenFoodFacts</organization>
         </developer>
     </developers>
 
