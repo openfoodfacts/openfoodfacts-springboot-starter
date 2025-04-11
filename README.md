@@ -1,16 +1,14 @@
 # OpenFoodFacts Spring Boot Starter Maven Package SDK.
+![image](https://github.com/user-attachments/assets/0cb8698f-fc89-4b98-92a7-63217aea6e76)
 
-| Github Page<br>javadoc and more |Author<br>Alper Mulayim |
-|----------|----------|
-| [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github%20Pages&logoColor=white)](https://alpermulayim.github.io/openfoodfacts-spring-boot-starter/) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alpermulayim/) |
+| Github Page<br>javadoc and more |Author<br>Alper Mulayim | JavaDoc| 
+|----------|----------|------------|
+| [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github%20Pages&logoColor=white)](https://alpermulayim.github.io/openfoodfacts-spring-boot-starter/) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alpermulayim/) |[JavaDoc](https://alpermulayim.github.io/openfoodfacts-spring-boot-starter/javadocs/com/alpermulayim/openfoodfacts_spring_boot_starter/OpenFoodFactsApi.html) |
+
 
 **openfoodfacts-spring-boot-starter** <br> Package designed to **simplify the integration of OpenFoodFacts REST APIs into Spring Boot** applications. <br> Developers can easily connect to the OpenFoodFacts API  without implement any complex RESTful calls.
 
- ### Framework
- ![image](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
- ![image](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 
- 
  **OpenFoodFactsWebClient**  **OpenFoodFactsApi** current version provides different methods for product and search. 
 
 ```java
@@ -21,6 +19,7 @@ OpenFoodFactsResponse getProduct(ProductRequest request);
 OpenFoodFactsPageResponse searchProduct(ProductSearchRequest request) throws InvocationTargetException, IllegalAccessException , OpenFoodFactsException;
 OpenPriceFactsResponse findPrice(PriceRequest priceRequest);
 OpenPriceFactsResponse findPrice(String productCode);
+OpenPriceLocationsPagedResponse findPriceLocation(PriceLocationRequest locationRequest);
 ProductSaveResponse saveProduct(ProductSaveRequest request);
 Mono<ResponseEntity<String>> uploadProductImage(ProductImageUploadRequest request);
 String uploadProductImageBlocked(ProductImageUploadRequest request) throws OpenFoodFactsException;
@@ -28,7 +27,31 @@ Mono<ResponseEntity<String>> uploadProductImageUnblocked(ProductImageUploadReque
 
 ```
 
-## How to use
+# Installation How To Use
+
+## Local Installation
+
+**Clone or fork** the repository. 
+
+**cd openfoodfacts-springboot-starter**
+
+**mvn clean install** 
+
+check the repositories added  to .md.  **cd ~/.m2** 
+
+Add **openfoodfacts-springboot-starter** dependency  to your spring boot **pom.xml**
+
+```java
+<dependency>
+	<groupId>org.openfoodfacts</groupId>
+	<artifactId>openfoodfacts-spring-boot-starter</artifactId>
+	<version>0.0.1</version>
+</dependency>
+```
+
+## Installation Online Latest Github Maven Package
+
+**Note:** Latest package is deployed to [https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter/packages/](https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter/packages/)  Please check the latest version. 
 
 **Add github repositories to pom.xml** 
 
@@ -49,16 +72,17 @@ Mono<ResponseEntity<String>> uploadProductImageUnblocked(ProductImageUploadReque
 <dependency>
   <groupId>com.alpermulayim</groupId>
   <artifactId>openfoodfacts-spring-boot-starter</artifactId>
-  <version>0.0.2.7</version>
+  <version>0.0.2.8</version>
 </dependency>
 ```
 
-Install the dependencies  
-
+**Install the dependencies**
 ```java
 mvn clean install 
-cd ~/.m2 // check the repositories downloaded. 
+cd ~/.m2 // check the repositories downloaded.
 ```
+
+## Configuration
 **Create configuration file** for OpenFoodFactsWebClientProperties OpenFoodFactsWebClient beans.
 
 ```java

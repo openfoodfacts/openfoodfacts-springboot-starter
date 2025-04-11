@@ -7,6 +7,8 @@ import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductReques
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ImageFacet;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ImageFormat;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.OsmType;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceLocationRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
 import org.springframework.mock.web.MockMultipartFile;
@@ -137,6 +139,20 @@ public class TestData {
                 .productName("fakeproduct")
                 .ingredientsText("fake ingredients")
                 .comment("fake comment")
+                .build();
+    }
+
+    public static PriceLocationRequest validPriceLocationRequest(){
+       return  PriceLocationRequest.builder()
+                .orderBy("name")
+                .osmAddressCityLike("paris")
+                .osmAddressCountryLike("france")
+                .page(1)
+                .priceCount(10)
+                .priceCountGte(5)
+                .priceCountLte(20)
+                .size(10)
+                .type(OsmType.OSM)
                 .build();
     }
 

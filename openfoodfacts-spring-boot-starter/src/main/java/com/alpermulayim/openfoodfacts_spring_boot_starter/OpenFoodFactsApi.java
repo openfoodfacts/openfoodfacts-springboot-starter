@@ -1,16 +1,19 @@
 package com.alpermulayim.openfoodfacts_spring_boot_starter;
 
+import com.alpermulayim.openfoodfacts_spring_boot_starter.dtos.openprices.OpenPricesProductLocation;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.exceptions.OpenFoodFactsException;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductField;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.ProductSearchRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.images.ProductImageUploadRequest;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceLocationRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.openprices.PriceRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.requests.saves.ProductSaveRequest;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsPageResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.OpenFoodFactsResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.ProductSaveResponse;
 import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceFactsResponse;
+import com.alpermulayim.openfoodfacts_spring_boot_starter.responses.openprices.OpenPriceLocationsPagedResponse;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
@@ -110,4 +113,13 @@ public interface OpenFoodFactsApi {
      * @throws OpenFoodFactsException if request is null or missing required fields.
      */
     ProductSaveResponse saveProduct(ProductSaveRequest request);
+
+    /**
+     * Find the Price Location
+     * @author Alper Mulayim  https://github.com/AlperMulayim
+     * @param locationRequest
+     * @return {@link OpenPriceLocationsPagedResponse}.
+     */
+    OpenPriceLocationsPagedResponse findPriceLocation(PriceLocationRequest locationRequest);
+
 }

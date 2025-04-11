@@ -158,4 +158,11 @@ public class OpenFoodFactsWebClientTest {
         });
     }
 
+    @Test
+    void whenWebClientFindLocationCalledWithNullRequestWillThrowException(){
+        contextRunner.run(context -> {
+            assertThrows(OpenFoodFactsException.class,()->webClient.findPriceLocation(null));
+        });
+    }
+
 }
