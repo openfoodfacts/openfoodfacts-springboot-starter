@@ -49,7 +49,7 @@ Add **openfoodfacts-springboot-starter** dependency  to your spring boot **pom.x
 </dependency>
 ```
 
-## Installation Online Latest Github  Package
+## Installation Online Latest Github Maven Package
 
 **Note:** Latest package is deployed to [https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter/packages/](https://github.com/AlperMulayim/openfoodfacts-spring-boot-starter/packages/)  Please check the latest version. 
 
